@@ -76,41 +76,43 @@ function getMinutes(timeStr) {
   return hour * 60 + min;
 }
 
+function findNextLesson(todayLessons, currentMinutes) {
+  return todayLessons.find(l => getMinutes(l.start) > currentMinutes) || null;
+}
+
+function findCurrentLesson(todayLessons, currentMinutes) {
+  return todayLessons.find(l => {
+    const start = getMinutes(l.start);
+    const end = getMinutes(l.end);
+    return currentMinutes >= start && currentMinutes < end;
+  }) || null;
+}
+
+function findNextRegistration() {
+  // find first lesson on next working day
+  const dayOrder = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+  let todayIndex = new Date().getDay() - 1;
+  if (todayIndex < 0) todayIndex = 0; // Sunday -> Monday
+  for (let i = 0; i < 7; i++) {
+    const day = dayOrder[(todayIndex + i) % 5];
+    const lessons = timetable[day];
+    if (lessons && lessons.length > 0) return { day, lesson: lessons[0] };
+  }
+  return null;
+}
+
 function updateTime() {
   const now = new Date();
   const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const day = dayNames[now.getDay()];
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
   document.getElementById("time").textContent = formatTime(now);
   document.getElementById("day").textContent = day;
 
   const lessons = timetable[day];
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-  if (!lessons) {
-    document.getElementById("lesson").textContent = "Your on the weekend, No lessons, No boredom 🥳";
-    document.getElementById("timer")?.remove();
-    document.getElementById("timetableList").textContent = "";
-    return;
-  }
-
-  let currentLesson = null;
-  let nextLesson = null;
-
-  for (let i = 0; i < lessons.length; i++) {
-    const startMin = getMinutes(lessons[i].start);
-    const endMin = getMinutes(lessons[i].end);
-
-    if (currentMinutes >= startMin && currentMinutes < endMin) {
-      currentLesson = { ...lessons[i], endMin };
-      nextLesson = lessons[i + 1] || null;
-      break;
-    }
-
-    if (currentMinutes < startMin && !nextLesson) {
-      nextLesson = lessons[i];
-    }
-  }
+  let currentLesson = lessons ? findCurrentLesson(lessons, currentMinutes) : null;
+  let nextLesson = lessons ? findNextLesson(lessons, currentMinutes) : null;
 
   const lessonEl = document.getElementById("lesson");
   let timerEl = document.getElementById("timer");
@@ -121,33 +123,51 @@ function updateTime() {
     timerEl = p;
   }
 
+  if (!lessons) {
+    // weekend
+    lessonEl.textContent = "Your on the weekend, No lessons, No boredom 🥳";
+    const nextReg = findNextRegistration();
+    if (nextReg) {
+      const dayDiff = (new Date().getDay() <= 0 ? 1 : 7 - now.getDay() + 1); // rough hours until Monday
+      const firstLesson = getMinutes(nextReg.lesson.start);
+      const hoursLeft = Math.floor((dayDiff * 24*60 + firstLesson - currentMinutes) / 60);
+      const minsLeft = (dayDiff * 24*60 + firstLesson - currentMinutes) % 60;
+      timerEl.textContent = `⏳ ${hoursLeft}h ${minsLeft}m until next registration`;
+    }
+    document.getElementById("timetableList").textContent = "";
+    return;
+  }
+
   if (currentLesson) {
-    lessonEl.textContent = currentLesson.subject;
     const minsLeft = currentLesson.endMin - currentMinutes;
     const hoursLeft = Math.floor(minsLeft / 60);
     const minutes = minsLeft % 60;
 
-    let nextStr = "";
+    lessonEl.textContent = currentLesson.subject;
     if (nextLesson) {
       const minsUntilNext = getMinutes(nextLesson.start) - currentMinutes;
       const nextHours = Math.floor(minsUntilNext / 60);
       const nextMinutes = minsUntilNext % 60;
-      nextStr = ` | 🕒 ${nextHours > 0 ? nextHours + "h " : ""}${nextMinutes}m until next lesson`;
+      timerEl.textContent = `⏳ ${hoursLeft}m until lesson ends | 🕒 ${nextHours}h ${nextMinutes}m until next lesson`;
+    } else {
+      timerEl.textContent = `⏳ ${hoursLeft}m until lesson ends | All lessons done for today ✅`;
     }
-
-    timerEl.textContent = `⏳ ${hoursLeft > 0 ? hoursLeft + "h " : ""}${minutes}m until lesson ends${nextStr}`;
   } else if (nextLesson) {
-    lessonEl.textContent = nextLesson.subject;
     const minsUntilNext = getMinutes(nextLesson.start) - currentMinutes;
     const hours = Math.floor(minsUntilNext / 60);
     const minutes = minsUntilNext % 60;
-    timerEl.textContent = `🕒 ${hours > 0 ? hours + "h " : ""}${minutes}m until next lesson`;
+    lessonEl.textContent = nextLesson.subject;
+    timerEl.textContent = `🕒 ${hours}h ${minutes}m until next lesson`;
   } else {
     lessonEl.textContent = "You don't have any lessons right now 🫡";
-    timerEl.textContent = "";
+    const lastLessonEnd = getMinutes(lessons[lessons.length-1].end);
+    const minsUntilNext = 24*60 - currentMinutes + getMinutes(lessons[0].start);
+    const hours = Math.floor(minsUntilNext / 60);
+    const minutes = minsUntilNext % 60;
+    timerEl.textContent = `🕒 ${hours}h ${minutes}m until next registration`;
   }
 
-  // render timetable with current lesson highlight
+  // highlight current lesson
   document.getElementById("timetableList").innerHTML = `<strong>Today's Timetable:</strong><br>` +
     lessons.map(l => {
       const isCurrent = currentLesson && currentLesson.subject === l.subject;
