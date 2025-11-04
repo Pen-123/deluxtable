@@ -23,6 +23,7 @@ const timetable = {
     { start: "12:40 PM", end: "1:20 PM", subject: "Maths" },
     { start: "1:20 PM", end: "1:50 PM", subject: "Break ☕" },
     { start: "1:50 PM", end: "2:40 PM", subject: "Science" },
+    { start: "3:00 PM", end: "3:40 PM", subject: "ECA" }, // extra lesson
   ],
   Wednesday: [
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
@@ -93,19 +94,26 @@ function updateTime() {
 
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   let currentLesson = null;
+  let nextLesson = null;
 
-  for (let lesson of lessons) {
-    const startMin = getMinutes(lesson.start);
-    const endMin = getMinutes(lesson.end);
+  for (let i = 0; i < lessons.length; i++) {
+    const startMin = getMinutes(lessons[i].start);
+    const endMin = getMinutes(lessons[i].end);
+
     if (currentMinutes >= startMin && currentMinutes < endMin) {
-      currentLesson = { ...lesson, endMin };
+      currentLesson = { ...lessons[i], endMin };
+      if (i + 1 < lessons.length) nextLesson = lessons[i + 1];
+      break;
+    }
+
+    if (currentMinutes < startMin) {
+      nextLesson = lessons[i];
       break;
     }
   }
 
-  document.getElementById("lesson").textContent = currentLesson ? currentLesson.subject : "Next lesson incoming... ⏳";
-
-  // Countdown timer
+  // Display current or next lesson
+  const lessonEl = document.getElementById("lesson");
   let timerEl = document.getElementById("timer");
   if (!timerEl) {
     timerEl = document.createElement("p");
@@ -114,17 +122,47 @@ function updateTime() {
   }
 
   if (currentLesson) {
+    lessonEl.textContent = currentLesson.subject;
     const remaining = currentLesson.endMin - currentMinutes;
     const mins = Math.floor(remaining);
     const secs = 59 - now.getSeconds();
     timerEl.textContent = `⏱ ${mins}:${secs.toString().padStart(2,"0")} until lesson ends`;
+  } else if (nextLesson) {
+    lessonEl.textContent = `Next: ${nextLesson.subject} (${nextLesson.start})`;
+    timerEl.textContent = "";
   } else {
+    lessonEl.textContent = "All lessons done, Mission accomplished ✅";
     timerEl.textContent = "";
   }
 
-  // Display today's timetable
-  document.getElementById("timetableList").innerHTML = `<strong>Today's Timetable:</strong><br>` + lessons.map(l => `${l.start} - ${l.end}: ${l.subject}`).join("<br>");
+  // Today's timetable
+  document.getElementById("timetableList").innerHTML = `<strong>Today's Timetable:</strong><br>` +
+    lessons.map(l => `${l.start} - ${l.end}: ${l.subject}`).join("<br>");
+}
+
+// Create button for full week timetable
+function createWeekButton() {
+  const btn = document.createElement("button");
+  btn.textContent = "View Full Week Timetable";
+  btn.style.marginTop = "10px";
+  btn.style.padding = "8px 15px";
+  btn.style.borderRadius = "10px";
+  btn.style.border = "none";
+  btn.style.cursor = "pointer";
+  btn.style.background = "#00ffc3";
+  btn.style.color = "#101010";
+  btn.onclick = () => {
+    let html = "<strong>Full Week Timetable:</strong><br>";
+    for (const d in timetable) {
+      html += `<br><u>${d}:</u><br>`;
+      html += timetable[d].map(l => `${l.start} - ${l.end}: ${l.subject}`).join("<br>");
+    }
+    const listEl = document.getElementById("timetableList");
+    listEl.innerHTML = html;
+  };
+  document.querySelector(".container").appendChild(btn);
 }
 
 setInterval(updateTime, 1000);
 updateTime();
+createWeekButton();
