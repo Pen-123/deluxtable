@@ -13,7 +13,6 @@ const timetable = {
     { start: "1:50 PM", end: "2:40 PM", subject: "Science" },
   ],
   Tuesday: [
-    // add later 👇
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
     { start: "8:00 AM", end: "8:50 AM", subject: "Art" },
     { start: "8:50 AM", end: "9:40 AM", subject: "French" },
@@ -26,7 +25,6 @@ const timetable = {
     { start: "1:50 PM", end: "2:40 PM", subject: "Science" },
   ],
   Wednesday: [
-    // add later 👇
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
     { start: "8:00 AM", end: "8:50 AM", subject: "Arabic" },
     { start: "8:50 AM", end: "9:40 AM", subject: "ICT/AI" },
@@ -39,7 +37,6 @@ const timetable = {
     { start: "1:50 PM", end: "2:40 PM", subject: "Islamic" },
   ],
   Thursday: [
-    // add later 👇
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
     { start: "8:00 AM", end: "8:50 AM", subject: "French" },
     { start: "8:50 AM", end: "9:40 AM", subject: "Math" },
@@ -69,11 +66,19 @@ function formatTime(date) {
   return `${hours}:${minutes} ${ampm}`;
 }
 
+function getMinutes(timeStr) {
+  const [h, m, period] = timeStr.split(/[: ]/);
+  let hour = parseInt(h);
+  const min = parseInt(m);
+  if (period === "PM" && hour !== 12) hour += 12;
+  if (period === "AM" && hour === 12) hour = 0;
+  return hour * 60 + min;
+}
+
 function updateTime() {
   const now = new Date();
   const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const day = dayNames[now.getDay()];
-
   document.getElementById("time").textContent = formatTime(now);
   document.getElementById("day").textContent = day;
 
@@ -81,35 +86,44 @@ function updateTime() {
   if (!lessons || lessons.length === 0) {
     document.getElementById("lesson").textContent = "No lessons today 💤";
     document.getElementById("timetableList").textContent = "";
+    const existingTimer = document.getElementById("timer");
+    if (existingTimer) existingTimer.remove();
     return;
   }
 
-  // Get next lesson
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
-  let nextLesson = null;
+  let currentLesson = null;
 
   for (let lesson of lessons) {
-    const [startH, startM, startPeriod] = lesson.start.split(/[: ]/);
-    let startHour = parseInt(startH);
-    let startMin = parseInt(startM);
-    if (startPeriod === "PM" && startHour !== 12) startHour += 12;
-    if (startPeriod === "AM" && startHour === 12) startHour = 0;
-
-    const lessonMinutes = startHour * 60 + startMin;
-    if (currentMinutes < lessonMinutes) {
-      nextLesson = lesson;
+    const startMin = getMinutes(lesson.start);
+    const endMin = getMinutes(lesson.end);
+    if (currentMinutes >= startMin && currentMinutes < endMin) {
+      currentLesson = { ...lesson, endMin };
       break;
     }
   }
 
-  document.getElementById("lesson").textContent = nextLesson
-    ? nextLesson.subject
-    : "All lessons done, Mission accomplished. ✅";
+  document.getElementById("lesson").textContent = currentLesson ? currentLesson.subject : "Next lesson incoming... ⏳";
 
-  // Display today's timetable below
-  const listEl = document.getElementById("timetableList");
-  listEl.innerHTML = `<strong>Today's Timetable:</strong><br>` + 
-    lessons.map(l => `${l.start} - ${l.end}: ${l.subject}`).join("<br>");
+  // Countdown timer
+  let timerEl = document.getElementById("timer");
+  if (!timerEl) {
+    timerEl = document.createElement("p");
+    timerEl.id = "timer";
+    document.querySelector(".card").appendChild(timerEl);
+  }
+
+  if (currentLesson) {
+    const remaining = currentLesson.endMin - currentMinutes;
+    const mins = Math.floor(remaining);
+    const secs = 59 - now.getSeconds();
+    timerEl.textContent = `⏱ ${mins}:${secs.toString().padStart(2,"0")} until lesson ends`;
+  } else {
+    timerEl.textContent = "";
+  }
+
+  // Display today's timetable
+  document.getElementById("timetableList").innerHTML = `<strong>Today's Timetable:</strong><br>` + lessons.map(l => `${l.start} - ${l.end}: ${l.subject}`).join("<br>");
 }
 
 setInterval(updateTime, 1000);
