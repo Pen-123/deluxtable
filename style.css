@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #101010, #1e1e1e);
+  color: #fff;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 40px 50px;
+  box-shadow: 0 0 30px rgba(255,255,255,0.1);
+  animation: floaty 3s ease-in-out infinite alternate;
+  width: 90%;
+  max-width: 400px;
+}
+
+@keyframes floaty {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-10px); }
+}
+
+h1 {
+  font-size: 3rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+}
+
+h2 {
+  font-size: 1.5rem;
+  opacity: 0.8;
+  margin-bottom: 0.5em;
+}
+
+.card {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.label {
+  opacity: 0.8;
+  margin-bottom: 0.2em;
+}
+
+#timetableList {
+  text-align: left;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.6em;
+}
+
+.fade {
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
