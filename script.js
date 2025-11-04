@@ -77,17 +77,12 @@ function getMinutes(timeStr) {
   return hour * 60 + min;
 }
 
-function getNextDay(day) {
-  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  let index = (days.indexOf(day) + 1) % days.length;
-  return days[index];
-}
-
-// main update
+// main
 function updateTime() {
   const now = new Date();
   const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const day = dayNames[now.getDay()];
+
   document.getElementById("time").textContent = formatTime(now);
   document.getElementById("day").textContent = day;
 
@@ -96,52 +91,34 @@ function updateTime() {
   let currentLesson = null;
   let nextLesson = null;
 
-  if (lessons) {
-    for (let i = 0; i < lessons.length; i++) {
-      const startMin = getMinutes(lessons[i].start);
-      const endMin = getMinutes(lessons[i].end);
-      if (currentMinutes >= startMin && currentMinutes < endMin) {
-        currentLesson = { ...lessons[i], endMin };
-        if (i + 1 < lessons.length) nextLesson = lessons[i + 1];
-        break;
-      }
-      if (currentMinutes < startMin) {
-        nextLesson = lessons[i];
-        break;
-      }
+  if (!lessons) {
+    document.getElementById("lesson").textContent = "Your on the weekend, No lessons, No boredom 🥳";
+    document.getElementById("timer")?.remove();
+    document.getElementById("timetableList").textContent = "";
+    return;
+  }
+
+  for (let i = 0; i < lessons.length; i++) {
+    const startMin = getMinutes(lessons[i].start);
+    const endMin = getMinutes(lessons[i].end);
+    if (currentMinutes >= startMin && currentMinutes < endMin) {
+      currentLesson = { ...lessons[i], endMin };
+      if (i + 1 < lessons.length) nextLesson = lessons[i + 1];
+      break;
     }
-  }
-
-  // NEXT LESSON DROPDOWN
-  const lessonDropdown = document.getElementById("lessonDropdown");
-  if (!lessonDropdown) {
-    const select = document.createElement("select");
-    select.id = "lessonDropdown";
-    select.style.marginTop = "10px";
-    select.style.padding = "8px";
-    select.style.borderRadius = "8px";
-    select.style.background = "rgba(255,255,255,0.05)";
-    select.style.color = "#fff";
-    document.querySelector(".card").appendChild(select);
-  }
-
-  const dd = document.getElementById("lessonDropdown");
-  dd.innerHTML = '';
-  if (lessons) {
-    lessons.forEach(l => {
-      const opt = document.createElement("option");
-      opt.value = l.subject;
-      opt.textContent = l.subject;
-      dd.appendChild(opt);
-    });
+    if (currentMinutes < startMin) {
+      nextLesson = lessons[i];
+      break;
+    }
   }
 
   const lessonEl = document.getElementById("lesson");
   let timerEl = document.getElementById("timer");
   if (!timerEl) {
-    timerEl = document.createElement("p");
-    timerEl.id = "timer";
-    document.querySelector(".card").appendChild(timerEl);
+    const p = document.createElement("p");
+    p.id = "timer";
+    lessonEl.parentNode.appendChild(p);
+    timerEl = p;
   }
 
   if (currentLesson) {
@@ -151,60 +128,25 @@ function updateTime() {
     const secs = 59 - now.getSeconds();
     timerEl.textContent = `⏱ ${mins}:${secs.toString().padStart(2,"0")} until lesson ends`;
   } else if (nextLesson) {
-    lessonEl.textContent = `Next: ${nextLesson.subject}`;
+    lessonEl.textContent = nextLesson.subject;
     const remaining = getMinutes(nextLesson.start) - currentMinutes;
     const hoursLeft = Math.floor(remaining / 60);
     const minsLeft = remaining % 60;
-    timerEl.textContent = `🕒 ${hoursLeft > 0 ? hoursLeft + "h " : ""}${minsLeft}m until it starts`;
+    timerEl.textContent = `🕒 ${hoursLeft > 0 ? hoursLeft + "h " : ""}${minsLeft}m until next lesson`;
   } else {
-    lessonEl.textContent = "All lessons done, Mission accomplished ✅";
-    const nextDay = getNextDay(day);
-    const firstLesson = timetable[nextDay]?.[0];
-    if (firstLesson) {
-      const nextStart = getMinutes(firstLesson.start) + 24*60; // next day
-      const diff = nextStart - currentMinutes;
-      const hoursLeft = Math.floor(diff / 60);
-      const minsLeft = diff % 60;
-      timerEl.textContent = `⏳ ${hoursLeft}h ${minsLeft}m until next registration`;
-    } else {
-      timerEl.textContent = "";
-    }
+    lessonEl.textContent = "You don't have any lessons right now 🫡";
+    timerEl.textContent = "";
   }
 
-  // TODAY TIMETABLE
-  if (lessons && lessons.length > 0) {
+  // render timetable with highlight
+  if (lessons) {
     document.getElementById("timetableList").innerHTML = `<strong>Today's Timetable:</strong><br>` +
-      lessons.map(l => `${l.start} - ${l.end}: ${l.subject}`).join("<br>");
-  } else {
-    document.getElementById("timetableList").textContent = "No lessons today 💤";
+      lessons.map(l => {
+        const isCurrent = currentLesson && currentLesson.subject === l.subject;
+        return `<span style="${isCurrent ? "background:#00ffc3; color:#101010; padding:2px 5px; border-radius:5px;" : ""}">${l.start} - ${l.end}: ${l.subject}</span>`;
+      }).join("<br>");
   }
-}
-
-// FULL WEEK BUTTON
-function createWeekButton() {
-  const btn = document.createElement("button");
-  btn.textContent = "View Full Week Timetable";
-  btn.style.marginTop = "10px";
-  btn.style.padding = "8px 15px";
-  btn.style.borderRadius = "10px";
-  btn.style.border = "none";
-  btn.style.cursor = "pointer";
-  btn.style.background = "#00ffc3";
-  btn.style.color = "#101010";
-  btn.onclick = () => {
-    let html = '<strong>Full Week Timetable:</strong><br><div style="display:flex; gap:20px; flex-wrap:wrap;">';
-    for (const d in timetable) {
-      html += `<div style="flex:1; min-width:150px; background: rgba(255,255,255,0.05); padding:10px; border-radius:10px;">`;
-      html += `<u>${d}</u><br>`;
-      html += timetable[d].map(l => `${l.start} - ${l.end}<br>${l.subject}`).join("<br><br>");
-      html += `</div>`;
-    }
-    html += `</div>`;
-    document.getElementById("timetableList").innerHTML = html;
-  };
-  document.querySelector(".container").appendChild(btn);
 }
 
 setInterval(updateTime, 1000);
 updateTime();
-createWeekButton();
