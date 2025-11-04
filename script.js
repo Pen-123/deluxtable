@@ -49,7 +49,7 @@ const timetable = {
     { start: "11:40 AM", end: "12:30 PM", subject: "Islamic" },
     { start: "12:40 PM", end: "1:20 PM", subject: "Arabic" },
     { start: "1:20 PM", end: "1:50 PM", subject: "Break ☕" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "ICT/AI" },,
+    { start: "1:50 PM", end: "2:40 PM", subject: "ICT/AI" },
   ],
   Friday: [
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
