@@ -100,11 +100,13 @@ function updateTime() {
   for (let i = 0; i < lessons.length; i++) {
     const startMin = getMinutes(lessons[i].start);
     const endMin = getMinutes(lessons[i].end);
+
     if (currentMinutes >= startMin && currentMinutes < endMin) {
       currentLesson = { ...lessons[i], endMin };
-      if (i + 1 < lessons.length) nextLesson = lessons[i + 1];
+      nextLesson = lessons[i + 1] || null;
       break;
     }
+
     if (currentMinutes < startMin && !nextLesson) {
       nextLesson = lessons[i];
     }
@@ -124,7 +126,16 @@ function updateTime() {
     const minsLeft = currentLesson.endMin - currentMinutes;
     const hoursLeft = Math.floor(minsLeft / 60);
     const minutes = minsLeft % 60;
-    timerEl.textContent = `⏳ ${hoursLeft > 0 ? hoursLeft + "h " : ""}${minutes}m until lesson ends`;
+
+    let nextStr = "";
+    if (nextLesson) {
+      const minsUntilNext = getMinutes(nextLesson.start) - currentMinutes;
+      const nextHours = Math.floor(minsUntilNext / 60);
+      const nextMinutes = minsUntilNext % 60;
+      nextStr = ` | 🕒 ${nextHours > 0 ? nextHours + "h " : ""}${nextMinutes}m until next lesson`;
+    }
+
+    timerEl.textContent = `⏳ ${hoursLeft > 0 ? hoursLeft + "h " : ""}${minutes}m until lesson ends${nextStr}`;
   } else if (nextLesson) {
     lessonEl.textContent = nextLesson.subject;
     const minsUntilNext = getMinutes(nextLesson.start) - currentMinutes;
