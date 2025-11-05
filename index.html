@@ -5,14 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>7B Timetable Tracker</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Make the whole page take up the viewport with flex layout */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f9fcff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      max-height: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      background: transparent;
+      padding: 0;
+    }
+    h1#time {
+      font-size: 4rem;
+      margin: 1rem 0 0.5rem 0;
+      letter-spacing: 2px;
+      font-weight: bold;
+      color: #2627c1;
+      text-align: center;
+    }
+    h2#day {
+      font-size: 2rem;
+      margin: 0 0 2rem 0;
+      color: #334;
+      text-align: center;
+    }
+    /* "Next Lesson" as a large section, not a card */
+    .next-lesson-section {
+      width: 100vw;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      background: #e6f0ff;
+      border-radius: 24px;
+      box-shadow: 0 2px 16px rgba(38,39,193,0.09);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .next-lesson-section .label {
+      font-size: 1.75rem;
+      color: #292b6e;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .next-lesson-section h3 {
+      font-size: 2.5rem;
+      color: #191a40;
+      margin: 0;
+      text-align: center;
+    }
+    #timetableList {
+      width: 100vw;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 700px) {
+      h1#time { font-size: 2.7rem; }
+      h2#day { font-size: 1.3rem; }
+      .next-lesson-section h3 { font-size: 1.4rem; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1 id="time" class="fade"></h1>
     <h2 id="day" class="fade"></h2>
 
-    <div class="card fade">
-      <p class="label">Next Lesson:</p>
+    <div class="next-lesson-section fade">
+      <span class="label">Next Lesson:</span>
       <h3 id="lesson"></h3>
     </div>
 
