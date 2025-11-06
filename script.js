@@ -59,199 +59,141 @@ const timetable = {
   ],
 };
 
-// Utility functions
-function getSeconds(timeStr) {
-  const [time, period] = timeStr.split(' ');
-  const [h, m] = time.split(':');
-  let hour = parseInt(h);
-  const min = parseInt(m);
+function convertTo24Hour(timeStr) {
+  const [time, modifier] = timeStr.split(' ');
+  let [hours, minutes] = time.split(':');
   
-  if (period === "PM" && hour !== 12) hour += 12;
-  if (period === "AM" && hour === 12) hour = 0;
+  hours = parseInt(hours);
+  minutes = parseInt(minutes);
   
-  return hour * 3600 + min * 60;
+  if (modifier === 'PM' && hours !== 12) {
+    hours += 12;
+  }
+  if (modifier === 'AM' && hours === 12) {
+    hours = 0;
+  }
+  
+  return { hours, minutes };
 }
 
-function formatTimeLeft(seconds) {
-  if (seconds <= 0) return "00h 00m 00s";
-  
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  return `${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+function getTimeInMinutes(timeStr) {
+  const { hours, minutes } = convertTo24Hour(timeStr);
+  return hours * 60 + minutes;
 }
 
-function updateFlipClock(now) {
-  let hours = now.getHours();
-  const minutes = now.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
+function formatTimeLeft(minutes) {
+  if (minutes <= 0) return "00:00";
   
-  // Convert to 12-hour format
-  hours = hours % 12 || 12;
-  const hoursStr = hours.toString().padStart(2, '0');
-  const minutesStr = minutes.toString().padStart(2, '0');
-  
-  // Update hour cards
-  const hourCards = document.querySelectorAll('.flip-card');
-  const hourTop1 = hourCards[0].querySelector('.top');
-  const hourBottom1 = hourCards[0].querySelector('.bottom');
-  const hourTop2 = hourCards[1].querySelector('.top');
-  const hourBottom2 = hourCards[1].querySelector('.bottom');
-  
-  if (hourTop1.textContent !== hoursStr[0]) {
-    hourTop1.textContent = hoursStr[0];
-    hourBottom1.textContent = hoursStr[0];
-    hourCards[0].classList.add('flipping');
-    setTimeout(() => hourCards[0].classList.remove('flipping'), 600);
-  }
-  
-  if (hourTop2.textContent !== hoursStr[1]) {
-    hourTop2.textContent = hoursStr[1];
-    hourBottom2.textContent = hoursStr[1];
-    hourCards[1].classList.add('flipping');
-    setTimeout(() => hourCards[1].classList.remove('flipping'), 600);
-  }
-  
-  // Update minutes cards
-  const minTop1 = hourCards[2].querySelector('.top');
-  const minBottom1 = hourCards[2].querySelector('.bottom');
-  const minTop2 = hourCards[3].querySelector('.top');
-  const minBottom2 = hourCards[3].querySelector('.bottom');
-  
-  if (minTop1.textContent !== minutesStr[0]) {
-    minTop1.textContent = minutesStr[0];
-    minBottom1.textContent = minutesStr[0];
-    hourCards[2].classList.add('flipping');
-    setTimeout(() => hourCards[2].classList.remove('flipping'), 600);
-  }
-  
-  if (minTop2.textContent !== minutesStr[1]) {
-    minTop2.textContent = minutesStr[1];
-    minBottom2.textContent = minutesStr[1];
-    hourCards[3].classList.add('flipping');
-    setTimeout(() => hourCards[3].classList.remove('flipping'), 600);
-  }
-  
-  // Update AM/PM
-  document.querySelector('.ampm').textContent = ampm;
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return `${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m`;
 }
 
-function updateTime() {
+function updateClock() {
   const now = new Date();
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const dayName = dayNames[now.getDay()];
+  const currentDay = dayNames[now.getDay()];
   
-  // Update flip clock
-  updateFlipClock(now);
+  // Update time display
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
   
-  // Update day with real current day
-  document.getElementById('day').textContent = dayName;
+  hours = hours % 12 || 12;
   
-  const lessons = timetable[dayName];
-  const currentLessonEl = document.getElementById('currentLesson');
-  const nextLessonEl = document.getElementById('nextLesson');
-  const currentTimerEl = document.getElementById('currentTimer');
-  const nextTimerEl = document.getElementById('nextTimer');
+  document.getElementById('time').textContent = 
+    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
   
-  const nowSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  // Update day
+  document.getElementById('day').textContent = currentDay;
   
-  // Handle weekends
-  if (!lessons) {
-    currentLessonEl.textContent = "No lessons today";
-    nextLessonEl.textContent = "Enjoy your weekend!";
-    currentTimerEl.textContent = "🥳";
-    nextTimerEl.textContent = "Next week starts soon";
-    document.getElementById('timetableList').innerHTML = '<strong>Weekend Schedule</strong><div class="timetable-lesson">No classes - Relax and recharge!</div>';
+  // Get today's lessons
+  const todayLessons = timetable[currentDay];
+  
+  if (!todayLessons) {
+    // Weekend
+    document.getElementById('currentLesson').textContent = "No school today!";
+    document.getElementById('nextLesson').textContent = "Enjoy your weekend!";
+    document.getElementById('currentTimer').textContent = "🥳";
+    document.getElementById('nextTimer').textContent = "Relax";
+    
+    const timetableContent = document.querySelector('.timetable-content');
+    timetableContent.innerHTML = '<div class="timetable-lesson">Weekend - No classes scheduled</div>';
     return;
   }
   
-  // Find current and next lessons
+  const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
   let currentLesson = null;
   let nextLesson = null;
   
-  for (let i = 0; i < lessons.length; i++) {
-    const lesson = lessons[i];
-    const startSec = getSeconds(lesson.start);
-    const endSec = getSeconds(lesson.end);
+  // Find current and next lessons
+  for (let i = 0; i < todayLessons.length; i++) {
+    const lesson = todayLessons[i];
+    const lessonStart = getTimeInMinutes(lesson.start);
+    const lessonEnd = getTimeInMinutes(lesson.end);
     
-    if (nowSeconds >= startSec && nowSeconds < endSec) {
+    if (currentTimeInMinutes >= lessonStart && currentTimeInMinutes < lessonEnd) {
       currentLesson = lesson;
-      // Next lesson is the one after current, if any
-      if (i + 1 < lessons.length) {
-        nextLesson = lessons[i + 1];
+      // Next lesson is the one after this, if it exists
+      if (i + 1 < todayLessons.length) {
+        nextLesson = todayLessons[i + 1];
       }
       break;
-    } else if (nowSeconds < startSec) {
+    } else if (currentTimeInMinutes < lessonStart) {
       // This is the next upcoming lesson
       nextLesson = lesson;
       break;
     }
   }
   
-  // If no current lesson found, but we're after the last lesson
-  if (!currentLesson && !nextLesson && lessons.length > 0) {
-    const lastLesson = lessons[lessons.length - 1];
-    if (nowSeconds >= getSeconds(lastLesson.end)) {
-      currentLesson = null;
-      nextLesson = null;
-    }
-  }
-  
   // Update current lesson display
   if (currentLesson) {
-    const endSec = getSeconds(currentLesson.end);
-    const timeLeft = endSec - nowSeconds;
+    const endTime = getTimeInMinutes(currentLesson.end);
+    const timeLeft = endTime - currentTimeInMinutes;
     
-    currentLessonEl.textContent = currentLesson.subject;
-    currentTimerEl.textContent = `Ends in: ${formatTimeLeft(timeLeft)}`;
+    document.getElementById('currentLesson').textContent = currentLesson.subject;
+    document.getElementById('currentTimer').textContent = `Ends in ${formatTimeLeft(timeLeft)}`;
   } else {
-    currentLessonEl.textContent = "No current lesson";
-    currentTimerEl.textContent = "Free period";
+    document.getElementById('currentLesson').textContent = "No current lesson";
+    document.getElementById('currentTimer').textContent = "Free period";
   }
   
   // Update next lesson display
   if (nextLesson) {
-    const startSec = getSeconds(nextLesson.start);
-    const timeToNext = startSec - nowSeconds;
+    const startTime = getTimeInMinutes(nextLesson.start);
+    const timeUntil = startTime - currentTimeInMinutes;
     
-    nextLessonEl.textContent = nextLesson.subject;
-    nextTimerEl.textContent = `Starts in: ${formatTimeLeft(timeToNext)}`;
+    document.getElementById('nextLesson').textContent = nextLesson.subject;
+    document.getElementById('nextTimer').textContent = `Starts in ${formatTimeLeft(timeUntil)}`;
   } else {
-    nextLessonEl.textContent = "No more lessons today";
-    nextTimerEl.textContent = "School's out! 🎉";
+    document.getElementById('nextLesson').textContent = "No more lessons today";
+    document.getElementById('nextTimer').textContent = "School's out! 🎉";
   }
   
-  // Update timetable display
-  updateTimetableUI(lessons, currentLesson, nextLesson);
+  // Update timetable
+  updateTimetable(todayLessons, currentLesson, nextLesson);
 }
 
-function updateTimetableUI(lessons, currentLesson, nextLesson) {
-  const timetableList = document.getElementById('timetableList');
+function updateTimetable(lessons, currentLesson, nextLesson) {
+  const timetableContent = document.querySelector('.timetable-content');
+  timetableContent.innerHTML = '';
   
-  let html = '<strong>Today\'s Schedule</strong>';
   lessons.forEach(lesson => {
-    let className = 'timetable-lesson';
+    const lessonElement = document.createElement('div');
+    lessonElement.className = 'timetable-lesson';
     
-    if (currentLesson && currentLesson.subject === lesson.subject) {
-      className += ' current';
-    } else if (nextLesson && nextLesson.subject === lesson.subject) {
-      className += ' next';
+    if (currentLesson && lesson.subject === currentLesson.subject) {
+      lessonElement.classList.add('current');
+    } else if (nextLesson && lesson.subject === nextLesson.subject) {
+      lessonElement.classList.add('next');
     }
     
-    html += `<div class="${className}">${lesson.start} - ${lesson.end}: ${lesson.subject}</div>`;
+    lessonElement.textContent = `${lesson.start} - ${lesson.end}: ${lesson.subject}`;
+    timetableContent.appendChild(lessonElement);
   });
-  
-  timetableList.innerHTML = html;
 }
 
-// Initialize everything
-function init() {
-  // Set initial state
-  updateTime();
-  
-  // Update every second
-  setInterval(updateTime, 1000);
-}
-
-// Start the application
-init();
+// Initialize and update every second
+updateClock();
+setInterval(updateClock, 1000);
