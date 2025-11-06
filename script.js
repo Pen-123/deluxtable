@@ -119,8 +119,7 @@ function updateClock() {
     document.getElementById('currentTimer').textContent = "🥳";
     document.getElementById('nextTimer').textContent = "🎉";
     
-    const timetableContent = document.querySelector('.timetable-content');
-    timetableContent.innerHTML = '<div class="timetable-lesson">Weekend - No classes scheduled</div>';
+    document.getElementById('timetableList').innerHTML = '<div class="timetable-lesson">Weekend - No classes scheduled</div>';
     return;
   }
   
@@ -177,7 +176,7 @@ function updateClock() {
 }
 
 function updateTimetable(lessons, currentLesson, nextLesson) {
-  const timetableContent = document.querySelector('.timetable-content');
+  const timetableContent = document.getElementById('timetableList');
   timetableContent.innerHTML = '';
   
   lessons.forEach(lesson => {
