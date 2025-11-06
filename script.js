@@ -76,17 +76,18 @@ function convertTo24Hour(timeStr) {
   return { hours, minutes };
 }
 
-function getTimeInMinutes(timeStr) {
+function getTimeInSeconds(timeStr) {
   const { hours, minutes } = convertTo24Hour(timeStr);
-  return hours * 60 + minutes;
+  return hours * 3600 + minutes * 60;
 }
 
-function formatTimeLeft(minutes) {
-  if (minutes <= 0) return "00:00";
+function formatCountdown(seconds) {
+  if (seconds <= 0) return "00:00:00";
   
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return `${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m`;
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
 function updateClock() {
@@ -115,32 +116,31 @@ function updateClock() {
     // Weekend
     document.getElementById('currentLesson').textContent = "No school today!";
     document.getElementById('nextLesson').textContent = "Enjoy your weekend!";
-    document.getElementById('currentTimer').textContent = "🥳";
-    document.getElementById('nextTimer').textContent = "Relax";
+    document.getElementById('nextTimer').textContent = "🥳";
     
     const timetableContent = document.querySelector('.timetable-content');
     timetableContent.innerHTML = '<div class="timetable-lesson">Weekend - No classes scheduled</div>';
     return;
   }
   
-  const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
+  const currentTimeInSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
   let currentLesson = null;
   let nextLesson = null;
   
   // Find current and next lessons
   for (let i = 0; i < todayLessons.length; i++) {
     const lesson = todayLessons[i];
-    const lessonStart = getTimeInMinutes(lesson.start);
-    const lessonEnd = getTimeInMinutes(lesson.end);
+    const lessonStart = getTimeInSeconds(lesson.start);
+    const lessonEnd = getTimeInSeconds(lesson.end);
     
-    if (currentTimeInMinutes >= lessonStart && currentTimeInMinutes < lessonEnd) {
+    if (currentTimeInSeconds >= lessonStart && currentTimeInSeconds < lessonEnd) {
       currentLesson = lesson;
       // Next lesson is the one after this, if it exists
       if (i + 1 < todayLessons.length) {
         nextLesson = todayLessons[i + 1];
       }
       break;
-    } else if (currentTimeInMinutes < lessonStart) {
+    } else if (currentTimeInSeconds < lessonStart) {
       // This is the next upcoming lesson
       nextLesson = lesson;
       break;
@@ -149,26 +149,21 @@ function updateClock() {
   
   // Update current lesson display
   if (currentLesson) {
-    const endTime = getTimeInMinutes(currentLesson.end);
-    const timeLeft = endTime - currentTimeInMinutes;
-    
     document.getElementById('currentLesson').textContent = currentLesson.subject;
-    document.getElementById('currentTimer').textContent = `Ends in ${formatTimeLeft(timeLeft)}`;
   } else {
     document.getElementById('currentLesson').textContent = "No current lesson";
-    document.getElementById('currentTimer').textContent = "Free period";
   }
   
-  // Update next lesson display
+  // Update next lesson display with live countdown
   if (nextLesson) {
-    const startTime = getTimeInMinutes(nextLesson.start);
-    const timeUntil = startTime - currentTimeInMinutes;
+    const startTime = getTimeInSeconds(nextLesson.start);
+    const timeUntil = startTime - currentTimeInSeconds;
     
     document.getElementById('nextLesson').textContent = nextLesson.subject;
-    document.getElementById('nextTimer').textContent = `Starts in ${formatTimeLeft(timeUntil)}`;
+    document.getElementById('nextTimer').textContent = formatCountdown(timeUntil);
   } else {
     document.getElementById('nextLesson').textContent = "No more lessons today";
-    document.getElementById('nextTimer').textContent = "School's out! 🎉";
+    document.getElementById('nextTimer').textContent = "00:00:00";
   }
   
   // Update timetable
