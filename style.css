@@ -17,120 +17,113 @@ body {
   background: linear-gradient(125deg, #181823 0%, #282846 60%, #00ffc3 120%);
   color: #fff;
   overflow-x: hidden;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 20px 0;
 }
 
 .container {
-  width: 100vw;
-  min-height: 100vh;
-  padding: 60px 20px 40px;
+  width: 95vw;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 15px;
 }
 
 .digital-clock {
   font-family: 'Share Tech Mono', 'Orbitron', 'Poppins', Arial, sans-serif;
-  font-size: min(12vw, 8em);
-  letter-spacing: 0.08em;
+  font-size: 2.8rem;
+  letter-spacing: 0.05em;
   background: linear-gradient(90deg, #00ffc3 0%, #292b6e 100%);
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  margin-bottom: 0.4em;
   font-weight: 700;
   text-shadow: 0 4px 48px #00ffc3a8, 0 0px 10px #292b6e66;
-  transition: color 0.2s;
   text-align: center;
   user-select: none;
+  margin: 0;
 }
 
 h2#day {
-  font-size: 2.6rem;
-  margin-bottom: 12px;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 500;
   text-align: center;
   color: #f2f2f7;
   text-shadow: 0 1px 12px #292b6e33;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  margin: 0;
 }
 
 .next-lesson-section {
-  width: 98vw;
-  max-width: 550px;
-  margin: 2em auto 1.2em auto;
-  padding: 2.2em 1.3em;
+  width: 100%;
+  margin: 10px 0;
+  padding: 1.2em 1em;
   background: linear-gradient(99deg, #2627c1 85%, #00ffc3 98%);
-  border-radius: 28px;
-  box-shadow: 0 6px 42px #18182355;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px #18182355;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: background 0.6s;
 }
 
 .next-lesson-section .label {
-  font-size: 2.1rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   color: #fff;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-shadow: 0 0px 6px #18182399;
 }
 
 .next-lesson-section h3 {
-  font-size: 2.7rem;
+  font-size: 1.4rem;
   color: #00ffc3;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
+  font-weight: 600;
+  margin: 0;
   text-align: center;
   text-shadow: 0 2px 24px #101010ee;
 }
 
 #timer {
-  font-size: 1.28rem;
+  font-size: 0.9rem;
   color: #fff;
-  margin-top: 10px;
+  margin-top: 8px;
   background: #00ffc352;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  letter-spacing: 1px;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
   text-shadow: 0 0px 8px #00ffc388;
 }
 
 #timetableList {
-  width: 98vw;
-  max-width: 600px;
-  margin: 0 auto;
-  margin-top: 26px;
-  border-radius: 20px;
+  width: 100%;
+  border-radius: 14px;
   background: rgba(36, 39, 193, 0.10);
-  box-shadow: 0 0px 24px #292b6e33;
-  padding: 22px 18px 18px 22px;
-  line-height: 2.0em;
-  font-size: 1.14rem;
+  box-shadow: 0 0px 16px #292b6e33;
+  padding: 16px;
+  line-height: 1.6em;
+  font-size: 0.95rem;
   color: #e4f1fb;
 }
 
 #timetableList strong {
   color: #fff;
-  font-size: 1.3rem;
-  letter-spacing: 1px;
-  margin-bottom: 14px;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
   display: block;
 }
 
 .timetable-lesson {
   display: block;
-  margin-bottom: 7px;
-  padding: 0.6em 0.9em;
-  border-radius: 12px;
+  margin-bottom: 5px;
+  padding: 0.4em 0.7em;
+  border-radius: 8px;
   transition: background 0.3s, color 0.3s;
   font-weight: 500;
 }
@@ -138,15 +131,15 @@ h2#day {
 .timetable-lesson.current {
   background: linear-gradient(90deg,#00ffc3 30%, #2627c1 90%);
   color: #181823;
-  font-weight: 700;
-  box-shadow: 0 1px 8px #00ffc3bb;
+  font-weight: 600;
+  box-shadow: 0 1px 6px #00ffc3bb;
 }
 
 .timetable-lesson.next {
   background: linear-gradient(90deg, #2627c1 30%, #00ffc3 90%);
   color: #fff;
-  font-weight: 700;
-  box-shadow: 0 1px 8px #2627c1bb;
+  font-weight: 600;
+  box-shadow: 0 1px 6px #2627c1bb;
 }
 
 /* Fade animation for page loading */
@@ -161,17 +154,43 @@ h2#day {
 
 /* Responsive */
 @media (max-width: 700px) {
-  .digital-clock { font-size: 3em; }
-  h2#day { font-size: 1.35rem;}
-  .next-lesson-section { 
-    padding: 1.2em 0.6em; 
-    margin: 1em auto;
+  body {
+    padding: 15px 0;
   }
-  .next-lesson-section .label { font-size: 1.5rem; }
-  .next-lesson-section h3 { font-size: 1.8rem; }
+  
+  .container {
+    width: 92vw;
+    gap: 12px;
+  }
+  
+  .digital-clock { 
+    font-size: 2.2rem; 
+  }
+  
+  h2#day { 
+    font-size: 1.1rem;
+  }
+  
+  .next-lesson-section { 
+    padding: 1em 0.8em; 
+    margin: 5px 0;
+  }
+  
+  .next-lesson-section .label { 
+    font-size: 1rem; 
+    margin-bottom: 0.3rem;
+  }
+  
+  .next-lesson-section h3 { 
+    font-size: 1.2rem; 
+  }
+  
   #timetableList { 
-    padding: 12px 7px 8px 10px; 
-    font-size: 0.98rem; 
-    margin-top: 15px;
+    padding: 12px; 
+    font-size: 0.9rem; 
+  }
+  
+  #timetableList strong {
+    font-size: 1rem;
   }
 }
