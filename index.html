@@ -8,16 +8,19 @@
 </head>
 <body>
   <div class="container">
-    <h1 id="time" class="digital-clock fade"></h1>
-    <h2 id="day" class="fade"></h2>
+    <h1 id="time" class="digital-clock fade">00:00:00</h1>
+    <h2 id="day" class="fade">Monday</h2>
 
     <div class="next-lesson-section fade">
       <span class="label">Next Lesson:</span>
-      <h3 id="lesson"></h3>
-      <div id="timer"></div>
+      <h3 id="lesson">Loading...</h3>
+      <div id="timer">Starts in: --:--</div>
     </div>
 
-    <div id="timetableList" class="fade"></div>
+    <div id="timetableList" class="fade">
+      <strong>Today's Schedule:</strong>
+      <!-- Timetable will be populated by JavaScript -->
+    </div>
   </div>
 
   <script src="script.js"></script>
