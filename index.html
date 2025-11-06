@@ -3,22 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>7B Timetable Tracker</title>
+  <title>7B Timetable</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="waves"></div>
   <div class="container">
-    <h1 id="time" class="digital-clock fade">00:00:00</h1>
+    <!-- Flip Clock -->
+    <div class="flip-clock fade">
+      <div class="flip-card">
+        <div class="top">00</div>
+        <div class="bottom">00</div>
+      </div>
+      <div class="flip-card">
+        <div class="top">00</div>
+        <div class="bottom">00</div>
+      </div>
+      <span class="colon">:</span>
+      <div class="flip-card">
+        <div class="top">00</div>
+        <div class="bottom">00</div>
+      </div>
+      <div class="flip-card">
+        <div class="top">00</div>
+        <div class="bottom">00</div>
+      </div>
+    </div>
+
     <h2 id="day" class="fade">Monday</h2>
 
     <div class="next-lesson-section fade">
-      <span class="label">Next Lesson:</span>
+      <span class="label">Next Lesson</span>
       <h3 id="lesson">Loading...</h3>
       <div id="timer">Starts in: --:--</div>
     </div>
 
     <div id="timetableList" class="fade">
-      <strong>Today's Schedule:</strong>
+      <strong>Today's Schedule</strong>
       <!-- Timetable will be populated by JavaScript -->
     </div>
   </div>
