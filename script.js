@@ -81,38 +81,148 @@ function formatTimeLeft(seconds) {
   return `${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
 }
 
-function findCurrentLesson(lessons, nowS) {
-  return lessons.find(lesson => {
+function updateFlipClock(now) {
+  let hours = now.getHours();
+  const minutes = now.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+  // Convert to 12-hour format
+  hours = hours % 12 || 12;
+  const hoursStr = hours.toString().padStart(2, '0');
+  const minutesStr = minutes.toString().padStart(2, '0');
+  
+  // Update hour cards
+  const hourCards = document.querySelectorAll('.flip-card');
+  const hourTop1 = hourCards[0].querySelector('.top');
+  const hourBottom1 = hourCards[0].querySelector('.bottom');
+  const hourTop2 = hourCards[1].querySelector('.top');
+  const hourBottom2 = hourCards[1].querySelector('.bottom');
+  
+  if (hourTop1.textContent !== hoursStr[0]) {
+    hourTop1.textContent = hoursStr[0];
+    hourBottom1.textContent = hoursStr[0];
+    hourCards[0].classList.add('flipping');
+    setTimeout(() => hourCards[0].classList.remove('flipping'), 600);
+  }
+  
+  if (hourTop2.textContent !== hoursStr[1]) {
+    hourTop2.textContent = hoursStr[1];
+    hourBottom2.textContent = hoursStr[1];
+    hourCards[1].classList.add('flipping');
+    setTimeout(() => hourCards[1].classList.remove('flipping'), 600);
+  }
+  
+  // Update minutes cards
+  const minTop1 = hourCards[2].querySelector('.top');
+  const minBottom1 = hourCards[2].querySelector('.bottom');
+  const minTop2 = hourCards[3].querySelector('.top');
+  const minBottom2 = hourCards[3].querySelector('.bottom');
+  
+  if (minTop1.textContent !== minutesStr[0]) {
+    minTop1.textContent = minutesStr[0];
+    minBottom1.textContent = minutesStr[0];
+    hourCards[2].classList.add('flipping');
+    setTimeout(() => hourCards[2].classList.remove('flipping'), 600);
+  }
+  
+  if (minTop2.textContent !== minutesStr[1]) {
+    minTop2.textContent = minutesStr[1];
+    minBottom2.textContent = minutesStr[1];
+    hourCards[3].classList.add('flipping');
+    setTimeout(() => hourCards[3].classList.remove('flipping'), 600);
+  }
+  
+  // Update AM/PM
+  document.querySelector('.ampm').textContent = ampm;
+}
+
+function updateTime() {
+  const now = new Date();
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const dayName = dayNames[now.getDay()];
+  
+  // Update flip clock
+  updateFlipClock(now);
+  
+  // Update day with real current day
+  document.getElementById('day').textContent = dayName;
+  
+  const lessons = timetable[dayName];
+  const currentLessonEl = document.getElementById('currentLesson');
+  const nextLessonEl = document.getElementById('nextLesson');
+  const currentTimerEl = document.getElementById('currentTimer');
+  const nextTimerEl = document.getElementById('nextTimer');
+  
+  const nowSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  
+  // Handle weekends
+  if (!lessons) {
+    currentLessonEl.textContent = "No lessons today";
+    nextLessonEl.textContent = "Enjoy your weekend!";
+    currentTimerEl.textContent = "🥳";
+    nextTimerEl.textContent = "Next week starts soon";
+    document.getElementById('timetableList').innerHTML = '<strong>Weekend Schedule</strong><div class="timetable-lesson">No classes - Relax and recharge!</div>';
+    return;
+  }
+  
+  // Find current and next lessons
+  let currentLesson = null;
+  let nextLesson = null;
+  
+  for (let i = 0; i < lessons.length; i++) {
+    const lesson = lessons[i];
     const startSec = getSeconds(lesson.start);
     const endSec = getSeconds(lesson.end);
-    return nowS >= startSec && nowS < endSec;
-  }) || null;
-}
-
-function findNextLesson(lessons, nowS) {
-  return lessons.find(lesson => getSeconds(lesson.start) > nowS) || null;
-}
-
-function updateFlipClock(now) {
-  const hours = now.getHours().toString().padStart(2, '0');
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  
-  const cards = document.querySelectorAll('.flip-card');
-  const digits = [hours[0], hours[1], minutes[0], minutes[1]];
-  
-  cards.forEach((card, index) => {
-    const top = card.querySelector('.top');
-    const bottom = card.querySelector('.bottom');
     
-    if (top.textContent !== digits[index]) {
-      top.textContent = digits[index];
-      bottom.textContent = digits[index];
-      
-      // Add flip animation
-      card.classList.add('flipping');
-      setTimeout(() => card.classList.remove('flipping'), 600);
+    if (nowSeconds >= startSec && nowSeconds < endSec) {
+      currentLesson = lesson;
+      // Next lesson is the one after current, if any
+      if (i + 1 < lessons.length) {
+        nextLesson = lessons[i + 1];
+      }
+      break;
+    } else if (nowSeconds < startSec) {
+      // This is the next upcoming lesson
+      nextLesson = lesson;
+      break;
     }
-  });
+  }
+  
+  // If no current lesson found, but we're after the last lesson
+  if (!currentLesson && !nextLesson && lessons.length > 0) {
+    const lastLesson = lessons[lessons.length - 1];
+    if (nowSeconds >= getSeconds(lastLesson.end)) {
+      currentLesson = null;
+      nextLesson = null;
+    }
+  }
+  
+  // Update current lesson display
+  if (currentLesson) {
+    const endSec = getSeconds(currentLesson.end);
+    const timeLeft = endSec - nowSeconds;
+    
+    currentLessonEl.textContent = currentLesson.subject;
+    currentTimerEl.textContent = `Ends in: ${formatTimeLeft(timeLeft)}`;
+  } else {
+    currentLessonEl.textContent = "No current lesson";
+    currentTimerEl.textContent = "Free period";
+  }
+  
+  // Update next lesson display
+  if (nextLesson) {
+    const startSec = getSeconds(nextLesson.start);
+    const timeToNext = startSec - nowSeconds;
+    
+    nextLessonEl.textContent = nextLesson.subject;
+    nextTimerEl.textContent = `Starts in: ${formatTimeLeft(timeToNext)}`;
+  } else {
+    nextLessonEl.textContent = "No more lessons today";
+    nextTimerEl.textContent = "School's out! 🎉";
+  }
+  
+  // Update timetable display
+  updateTimetableUI(lessons, currentLesson, nextLesson);
 }
 
 function updateTimetableUI(lessons, currentLesson, nextLesson) {
@@ -132,83 +242,6 @@ function updateTimetableUI(lessons, currentLesson, nextLesson) {
   });
   
   timetableList.innerHTML = html;
-}
-
-function updateTime() {
-  const now = new Date();
-  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const dayName = dayNames[now.getDay()];
-  
-  // Update flip clock
-  updateFlipClock(now);
-  
-  // Update day
-  document.getElementById('day').textContent = dayName;
-  
-  const lessons = timetable[dayName];
-  const lessonEl = document.getElementById('lesson');
-  const timerEl = document.getElementById('timer');
-  
-  const nowSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-  
-  // Handle weekends
-  if (!lessons) {
-    lessonEl.textContent = "Weekend! No lessons 🥳";
-    timerEl.textContent = "Enjoy your break!";
-    document.getElementById('timetableList').innerHTML = '<strong>No lessons today</strong>';
-    return;
-  }
-  
-  const currentLesson = findCurrentLesson(lessons, nowSeconds);
-  const nextLesson = findNextLesson(lessons, nowSeconds);
-  
-  // Update current/next lesson display
-  if (currentLesson) {
-    const endSec = getSeconds(currentLesson.end);
-    const timeLeft = endSec - nowSeconds;
-    
-    lessonEl.textContent = currentLesson.subject;
-    
-    if (nextLesson) {
-      const nextStartSec = getSeconds(nextLesson.start);
-      const timeToNext = nextStartSec - nowSeconds;
-      timerEl.textContent = `Ends in: ${formatTimeLeft(timeLeft)} | Next: ${formatTimeLeft(timeToNext)}`;
-    } else {
-      timerEl.textContent = `Ends in: ${formatTimeLeft(timeLeft)} | All done today ✅`;
-    }
-  } else if (nextLesson) {
-    const nextStartSec = getSeconds(nextLesson.start);
-    const timeToNext = nextStartSec - nowSeconds;
-    
-    lessonEl.textContent = nextLesson.subject;
-    timerEl.textContent = `Starts in: ${formatTimeLeft(timeToNext)}`;
-  } else {
-    // No current or next lesson (after school)
-    lessonEl.textContent = "School's out! 🎉";
-    
-    // Find next day's first lesson
-    let nextDayIndex = (now.getDay() + 1) % 7;
-    let nextDayName = dayNames[nextDayIndex];
-    
-    while (!timetable[nextDayName] && nextDayIndex !== now.getDay()) {
-      nextDayIndex = (nextDayIndex + 1) % 7;
-      nextDayName = dayNames[nextDayIndex];
-    }
-    
-    if (timetable[nextDayName]) {
-      const nextDayFirstLesson = timetable[nextDayName][0];
-      const nextStartSec = getSeconds(nextDayFirstLesson.start);
-      const secondsUntilTomorrow = (24 * 3600) - nowSeconds;
-      const totalSeconds = secondsUntilTomorrow + nextStartSec;
-      
-      timerEl.textContent = `Next lesson: ${formatTimeLeft(totalSeconds)}`;
-    } else {
-      timerEl.textContent = "Enjoy your break! 🏖️";
-    }
-  }
-  
-  // Update timetable display
-  updateTimetableUI(lessons, currentLesson, nextLesson);
 }
 
 // Initialize everything
