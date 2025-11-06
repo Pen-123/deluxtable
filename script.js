@@ -116,7 +116,8 @@ function updateClock() {
     // Weekend
     document.getElementById('currentLesson').textContent = "No school today!";
     document.getElementById('nextLesson').textContent = "Enjoy your weekend!";
-    document.getElementById('nextTimer').textContent = "🥳";
+    document.getElementById('currentTimer').textContent = "🥳";
+    document.getElementById('nextTimer').textContent = "🎉";
     
     const timetableContent = document.querySelector('.timetable-content');
     timetableContent.innerHTML = '<div class="timetable-lesson">Weekend - No classes scheduled</div>';
@@ -147,11 +148,16 @@ function updateClock() {
     }
   }
   
-  // Update current lesson display
+  // Update current lesson display with live countdown
   if (currentLesson) {
+    const endTime = getTimeInSeconds(currentLesson.end);
+    const timeLeft = endTime - currentTimeInSeconds;
+    
     document.getElementById('currentLesson').textContent = currentLesson.subject;
+    document.getElementById('currentTimer').textContent = formatCountdown(timeLeft);
   } else {
     document.getElementById('currentLesson').textContent = "No current lesson";
+    document.getElementById('currentTimer').textContent = "--:--:--";
   }
   
   // Update next lesson display with live countdown
