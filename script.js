@@ -90,6 +90,113 @@ function formatCountdown(seconds) {
   return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
+// Add this function to get subject icon and type
+function getSubjectInfo(subject) {
+  const lowerSubject = subject.toLowerCase();
+  
+  if (lowerSubject.includes('math') || lowerSubject.includes('maths')) {
+    return { icon: '∑', type: 'math' };
+  } else if (lowerSubject.includes('english')) {
+    return { icon: 'A', type: 'english' };
+  } else if (lowerSubject.includes('science')) {
+    return { icon: '⚗', type: 'science' };
+  } else if (lowerSubject.includes('break') || lowerSubject.includes('☕')) {
+    return { icon: '☕', type: 'break' };
+  } else if (lowerSubject.includes('assembly') || lowerSubject.includes('registration')) {
+    return { icon: '📋', type: 'other' };
+  } else if (lowerSubject.includes('swimming') || lowerSubject.includes('pe')) {
+    return { icon: '🏊', type: 'other' };
+  } else if (lowerSubject.includes('art') || lowerSubject.includes('music')) {
+    return { icon: '🎨', type: 'other' };
+  } else if (lowerSubject.includes('french') || lowerSubject.includes('arabic')) {
+    return { icon: '🌍', type: 'other' };
+  } else {
+    return { icon: '📚', type: 'other' };
+  }
+}
+
+// Helper function to calculate total lesson time
+function getTotalLessonTime(lessons) {
+  let totalMinutes = 0;
+  lessons.forEach(lesson => {
+    const start = getTimeInSeconds(lesson.start);
+    const end = getTimeInSeconds(lesson.end);
+    totalMinutes += (end - start) / 60;
+  });
+  
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+  return `${minutes}m`;
+}
+
+function updateTimetable(lessons, currentLesson, nextLesson) {
+  const timetableContent = document.getElementById('timetableList');
+  const scheduleSummary = document.getElementById('scheduleSummary');
+  
+  // Update schedule summary
+  if (lessons && lessons.length > 0) {
+    scheduleSummary.textContent = `${lessons.length} lessons • ${getTotalLessonTime(lessons)}`;
+  } else {
+    scheduleSummary.textContent = "No lessons today";
+  }
+  
+  timetableContent.innerHTML = '';
+  
+  if (!lessons) {
+    // Weekend
+    const weekendElement = document.createElement('div');
+    weekendElement.className = 'weekend-message';
+    weekendElement.innerHTML = `
+      <div class="weekend-icon">🎉</div>
+      <div class="weekend-title">No School Today!</div>
+      <div class="weekend-subtitle">Enjoy your weekend!</div>
+    `;
+    timetableContent.appendChild(weekendElement);
+    return;
+  }
+  
+  const currentTimeInSeconds = new Date().getHours() * 3600 + new Date().getMinutes() * 60 + new Date().getSeconds();
+  
+  lessons.forEach((lesson, index) => {
+    const lessonElement = document.createElement('div');
+    const subjectInfo = getSubjectInfo(lesson.subject);
+    const lessonStart = getTimeInSeconds(lesson.start);
+    const lessonEnd = getTimeInSeconds(lesson.end);
+    
+    let status = 'Upcoming';
+    let statusClass = '';
+    
+    if (currentLesson && lesson.subject === currentLesson.subject) {
+      status = 'NOW';
+      statusClass = 'current';
+    } else if (nextLesson && lesson.subject === nextLesson.subject) {
+      status = 'NEXT';
+      statusClass = 'next';
+    } else if (currentTimeInSeconds > lessonEnd) {
+      status = 'Completed';
+      statusClass = 'completed';
+    }
+    
+    lessonElement.className = `timetable-lesson ${statusClass} subject-${subjectInfo.type}`;
+    lessonElement.innerHTML = `
+      <div class="timetable-lesson-icon">${subjectInfo.icon}</div>
+      <div class="timetable-lesson-content">
+        <div class="timetable-lesson-info">
+          <div class="timetable-lesson-subject">${lesson.subject}</div>
+          <div class="timetable-lesson-time">${lesson.start} - ${lesson.end}</div>
+        </div>
+        <div class="timetable-lesson-status">${status}</div>
+      </div>
+    `;
+    
+    timetableContent.appendChild(lessonElement);
+  });
+}
+
 function updateClock() {
   const now = new Date();
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -119,7 +226,7 @@ function updateClock() {
     document.getElementById('currentTimer').textContent = "🥳";
     document.getElementById('nextTimer').textContent = "🎉";
     
-    document.getElementById('timetableList').innerHTML = '<div class="timetable-lesson">Weekend - No classes scheduled</div>';
+    updateTimetable(null);
     return;
   }
   
@@ -173,25 +280,6 @@ function updateClock() {
   
   // Update timetable
   updateTimetable(todayLessons, currentLesson, nextLesson);
-}
-
-function updateTimetable(lessons, currentLesson, nextLesson) {
-  const timetableContent = document.getElementById('timetableList');
-  timetableContent.innerHTML = '';
-  
-  lessons.forEach(lesson => {
-    const lessonElement = document.createElement('div');
-    lessonElement.className = 'timetable-lesson';
-    
-    if (currentLesson && lesson.subject === currentLesson.subject) {
-      lessonElement.classList.add('current');
-    } else if (nextLesson && lesson.subject === nextLesson.subject) {
-      lessonElement.classList.add('next');
-    }
-    
-    lessonElement.textContent = `${lesson.start} - ${lesson.end}: ${lesson.subject}`;
-    timetableContent.appendChild(lessonElement);
-  });
 }
 
 // Initialize and update every second
