@@ -2,7 +2,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  --cloudflare-orange: #FF6A00;
+  --cloudflare-blue: #0072FF;
+  --cloudflare-purple: #8A2BE2;
+  --bg-dark: #1A1A1A;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --text-light: #FFFFFF;
+  --text-dim: #A0A0A0;
 }
 
 html, body {
@@ -14,183 +24,236 @@ html, body {
 body {
   min-height: 100vh;
   width: 100vw;
-  background: linear-gradient(125deg, #181823 0%, #282846 60%, #00ffc3 120%);
-  color: #fff;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, #2D1B69 100%);
+  color: var(--text-light);
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 20px 0;
+  justify-content: center;
+  position: relative;
+}
+
+.waves {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 106, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 114, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(138, 43, 226, 0.05) 0%, transparent 50%);
+  z-index: -1;
+  animation: waveMove 8s ease-in-out infinite;
+}
+
+@keyframes waveMove {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.05) rotate(1deg); }
 }
 
 .container {
   width: 95vw;
-  max-width: 500px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
+  padding: 20px 0;
 }
 
-.digital-clock {
-  font-family: 'Share Tech Mono', 'Orbitron', 'Poppins', Arial, sans-serif;
-  font-size: 2.8rem;
-  letter-spacing: 0.05em;
-  background: linear-gradient(90deg, #00ffc3 0%, #292b6e 100%);
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  font-weight: 700;
-  text-shadow: 0 4px 48px #00ffc3a8, 0 0px 10px #292b6e66;
-  text-align: center;
-  user-select: none;
-  margin: 0;
+/* Modern Flip Clock */
+.flip-clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.flip-card {
+  position: relative;
+  width: 32px;
+  height: 40px;
+  perspective: 200px;
+}
+
+.flip-card .top,
+.flip-card .bottom {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: var(--card-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.flip-card .top {
+  top: 0;
+  align-items: flex-end;
+  border-bottom: 0.5px solid rgba(255,255,255,0.1);
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255,255,255,0.1) 100%);
+}
+
+.flip-card .bottom {
+  bottom: 0;
+  align-items: flex-start;
+  border-top: 0.5px solid rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, var(--card-bg) 100%);
+}
+
+.colon {
+  color: var(--cloudflare-orange);
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 2px;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
 }
 
 h2#day {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 500;
+  color: var(--text-dim);
   text-align: center;
-  color: #f2f2f7;
-  text-shadow: 0 1px 12px #292b6e33;
-  letter-spacing: 0.5px;
   margin: 0;
+  letter-spacing: 0.5px;
 }
 
 .next-lesson-section {
   width: 100%;
-  margin: 10px 0;
-  padding: 1.2em 1em;
-  background: linear-gradient(99deg, #2627c1 85%, #00ffc3 98%);
-  border-radius: 16px;
-  box-shadow: 0 4px 20px #18182355;
+  margin: 8px 0;
+  padding: 1rem;
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .next-lesson-section .label {
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-dim);
   margin-bottom: 0.5rem;
-  text-shadow: 0 0px 6px #18182399;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .next-lesson-section h3 {
-  font-size: 1.4rem;
-  color: #00ffc3;
+  font-size: 1.1rem;
+  color: var(--text-light);
   font-weight: 600;
-  margin: 0;
+  margin: 0 0 0.5rem 0;
   text-align: center;
-  text-shadow: 0 2px 24px #101010ee;
 }
 
 #timer {
-  font-size: 0.9rem;
-  color: #fff;
-  margin-top: 8px;
-  background: #00ffc352;
+  font-size: 0.8rem;
+  color: var(--cloudflare-orange);
+  background: rgba(255, 106, 0, 0.1);
   border-radius: 6px;
-  padding: 4px 12px;
+  padding: 4px 8px;
   font-weight: 500;
-  letter-spacing: 0.5px;
-  text-shadow: 0 0px 8px #00ffc388;
 }
 
 #timetableList {
   width: 100%;
-  border-radius: 14px;
-  background: rgba(36, 39, 193, 0.10);
-  box-shadow: 0 0px 16px #292b6e33;
-  padding: 16px;
-  line-height: 1.6em;
-  font-size: 0.95rem;
-  color: #e4f1fb;
+  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 #timetableList strong {
-  color: #fff;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  margin-bottom: 10px;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
   display: block;
+  text-align: center;
 }
 
 .timetable-lesson {
   display: block;
-  margin-bottom: 5px;
-  padding: 0.4em 0.7em;
-  border-radius: 8px;
-  transition: background 0.3s, color 0.3s;
+  margin-bottom: 4px;
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
   font-weight: 500;
+  font-size: 0.85rem;
+  border-left: 3px solid transparent;
 }
 
 .timetable-lesson.current {
-  background: linear-gradient(90deg,#00ffc3 30%, #2627c1 90%);
-  color: #181823;
-  font-weight: 600;
-  box-shadow: 0 1px 6px #00ffc3bb;
+  background: rgba(255, 106, 0, 0.15);
+  border-left-color: var(--cloudflare-orange);
+  color: var(--text-light);
 }
 
 .timetable-lesson.next {
-  background: linear-gradient(90deg, #2627c1 30%, #00ffc3 90%);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: 0 1px 6px #2627c1bb;
+  background: rgba(0, 114, 255, 0.15);
+  border-left-color: var(--cloudflare-blue);
+  color: var(--text-light);
 }
 
-/* Fade animation for page loading */
+/* Fade animation */
 .fade {
   animation: fadeIn 1s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px);}
-  to { opacity: 1; transform: translateY(0);}
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsive */
-@media (max-width: 700px) {
-  body {
-    padding: 15px 0;
-  }
-  
+@media (max-width: 480px) {
   .container {
     width: 92vw;
+    max-width: 350px;
     gap: 12px;
   }
   
-  .digital-clock { 
-    font-size: 2.2rem; 
+  .flip-card {
+    width: 28px;
+    height: 36px;
   }
   
-  h2#day { 
-    font-size: 1.1rem;
-  }
-  
-  .next-lesson-section { 
-    padding: 1em 0.8em; 
-    margin: 5px 0;
-  }
-  
-  .next-lesson-section .label { 
-    font-size: 1rem; 
-    margin-bottom: 0.3rem;
-  }
-  
-  .next-lesson-section h3 { 
-    font-size: 1.2rem; 
-  }
-  
-  #timetableList { 
-    padding: 12px; 
-    font-size: 0.9rem; 
-  }
-  
-  #timetableList strong {
+  .flip-card .top,
+  .flip-card .bottom {
     font-size: 1rem;
+  }
+  
+  .next-lesson-section {
+    padding: 0.8rem;
+  }
+  
+  .next-lesson-section h3 {
+    font-size: 1rem;
+  }
+  
+  #timetableList {
+    padding: 0.8rem;
+    font-size: 0.85rem;
   }
 }
