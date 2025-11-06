@@ -5,41 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>7B Timetable</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="waves"></div>
   <div class="container">
-    <!-- Flip Clock -->
-    <div class="flip-clock fade">
-      <div class="flip-card">
-        <div class="top">12</div>
-        <div class="bottom">12</div>
-      </div>
-      <span class="colon">:</span>
-      <div class="flip-card">
-        <div class="top">00</div>
-        <div class="bottom">00</div>
-      </div>
-      <div class="ampm">AM</div>
+    <div class="clock-section">
+      <div id="time" class="digital-clock">00:00:00 AM</div>
+      <h2 id="day">Monday</h2>
     </div>
 
-    <h2 id="day" class="fade">Loading...</h2>
-
-    <div class="lesson-section current-lesson fade">
+    <div class="lesson-section current-lesson">
       <span class="label">Current Lesson</span>
       <h3 id="currentLesson">No current lesson</h3>
-      <div id="currentTimer"></div>
+      <div id="currentTimer">--</div>
     </div>
 
-    <div class="lesson-section next-lesson fade">
+    <div class="lesson-section next-lesson">
       <span class="label">Next Lesson</span>
       <h3 id="nextLesson">No next lesson</h3>
-      <div id="nextTimer"></div>
+      <div id="nextTimer">--</div>
     </div>
 
-    <div id="timetableList" class="fade"></div>
+    <div id="timetableList" class="timetable-container">
+      <strong>Today's Schedule</strong>
+      <div class="timetable-content"></div>
+    </div>
   </div>
 
   <script src="script.js"></script>
