@@ -14,30 +14,29 @@
     <!-- Flip Clock -->
     <div class="flip-clock fade">
       <div class="flip-card">
-        <div class="top">00</div>
-        <div class="bottom">00</div>
-      </div>
-      <div class="flip-card">
-        <div class="top">00</div>
-        <div class="bottom">00</div>
+        <div class="top">12</div>
+        <div class="bottom">12</div>
       </div>
       <span class="colon">:</span>
       <div class="flip-card">
         <div class="top">00</div>
         <div class="bottom">00</div>
       </div>
-      <div class="flip-card">
-        <div class="top">00</div>
-        <div class="bottom">00</div>
-      </div>
+      <div class="ampm">AM</div>
     </div>
 
-    <h2 id="day" class="fade">Monday</h2>
+    <h2 id="day" class="fade">Loading...</h2>
 
-    <div class="next-lesson-section fade">
+    <div class="lesson-section current-lesson fade">
+      <span class="label">Current Lesson</span>
+      <h3 id="currentLesson">No current lesson</h3>
+      <div id="currentTimer"></div>
+    </div>
+
+    <div class="lesson-section next-lesson fade">
       <span class="label">Next Lesson</span>
-      <h3 id="lesson">Loading...</h3>
-      <div id="timer"></div>
+      <h3 id="nextLesson">No next lesson</h3>
+      <div id="nextTimer"></div>
     </div>
 
     <div id="timetableList" class="fade"></div>
