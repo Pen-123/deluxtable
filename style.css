@@ -32,6 +32,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 20px 0;
 }
 
 .waves {
@@ -55,12 +56,11 @@ body {
 
 .container {
   width: 95vw;
-  max-width: 400px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  padding: 20px 0;
 }
 
 /* Modern Flip Clock */
@@ -93,6 +93,7 @@ body {
   justify-content: center;
   font-weight: 600;
   font-size: 1.2rem;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .flip-card .top {
@@ -115,6 +116,7 @@ body {
   font-size: 1rem;
   margin: 0 2px;
   animation: blink 2s infinite;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 @keyframes blink {
@@ -163,12 +165,14 @@ h2#day {
 }
 
 #timer {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--cloudflare-orange);
   background: rgba(255, 106, 0, 0.1);
   border-radius: 6px;
   padding: 4px 8px;
   font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
 }
 
 #timetableList {
@@ -179,7 +183,7 @@ h2#day {
   backdrop-filter: blur(10px);
   padding: 1rem;
   line-height: 1.5;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-light);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
@@ -196,11 +200,11 @@ h2#day {
 .timetable-lesson {
   display: block;
   margin-bottom: 4px;
-  padding: 0.5rem 0.7rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 6px;
   transition: all 0.3s ease;
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   border-left: 3px solid transparent;
 }
 
@@ -230,7 +234,7 @@ h2#day {
 @media (max-width: 480px) {
   .container {
     width: 92vw;
-    max-width: 350px;
+    max-width: 380px;
     gap: 12px;
   }
   
@@ -254,6 +258,6 @@ h2#day {
   
   #timetableList {
     padding: 0.8rem;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 }
