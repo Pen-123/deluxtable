@@ -5,6 +5,12 @@
   font-family: "Poppins", Arial, sans-serif;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   min-height: 100vh;
   width: 100vw;
@@ -14,16 +20,18 @@ body {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
   width: 100vw;
   min-height: 100vh;
-  padding-top: 60px;
-  padding-bottom: 40px;
+  padding: 60px 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .digital-clock {
@@ -145,6 +153,7 @@ h2#day {
 .fade {
   animation: fadeIn 1s ease;
 }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px);}
   to { opacity: 1; transform: translateY(0);}
@@ -154,6 +163,15 @@ h2#day {
 @media (max-width: 700px) {
   .digital-clock { font-size: 3em; }
   h2#day { font-size: 1.35rem;}
-  .next-lesson-section { padding: 1.2em 0.6em; }
-  #timetableList { padding: 12px 7px 8px 10px; font-size: 0.98rem; }
+  .next-lesson-section { 
+    padding: 1.2em 0.6em; 
+    margin: 1em auto;
+  }
+  .next-lesson-section .label { font-size: 1.5rem; }
+  .next-lesson-section h3 { font-size: 1.8rem; }
+  #timetableList { 
+    padding: 12px 7px 8px 10px; 
+    font-size: 0.98rem; 
+    margin-top: 15px;
+  }
 }
