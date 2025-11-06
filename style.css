@@ -23,7 +23,7 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -52,6 +52,28 @@ body {
   font-weight: 500;
 }
 
+.main-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.side-panel {
+  flex: 0 0 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.timetable-container {
+  flex: 1;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 500px;
+}
+
 .lesson-section {
   padding: 25px;
   background: var(--card-bg);
@@ -78,21 +100,27 @@ body {
 }
 
 .lesson-section h3 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-bottom: 20px;
   color: var(--text-light);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .countdown-timer {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  padding: 15px 25px;
+  padding: 15px 20px;
   border-radius: 12px;
   display: inline-block;
   font-family: 'Courier New', monospace;
   letter-spacing: 2px;
   border: 2px solid;
   text-shadow: 0 0 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .current-timer {
@@ -109,16 +137,9 @@ body {
   text-shadow: 0 0 10px rgba(0, 114, 255, 0.5);
 }
 
-.timetable-container {
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .timetable-container strong {
-  font-size: 1.1rem;
-  margin-bottom: 15px;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
   display: block;
   text-align: center;
   color: var(--text-light);
@@ -127,27 +148,43 @@ body {
 .timetable-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .timetable-lesson {
-  padding: 12px;
+  padding: 15px;
   border-radius: 8px;
-  border-left: 3px solid transparent;
+  border-left: 4px solid transparent;
   background: rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
 .timetable-lesson.current {
   background: rgba(255, 106, 0, 0.15);
   border-left-color: var(--cloudflare-orange);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(255, 106, 0, 0.2);
 }
 
 .timetable-lesson.next {
   background: rgba(0, 114, 255, 0.15);
   border-left-color: var(--cloudflare-blue);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.2);
 }
 
-@media (max-width: 600px) {
+/* Responsive */
+@media (max-width: 900px) {
+  .main-content {
+    flex-direction: column;
+  }
+  
+  .side-panel {
+    flex: none;
+    width: 100%;
+  }
+  
   .digital-clock {
     font-size: 2.5rem;
   }
@@ -161,11 +198,36 @@ body {
   }
   
   .lesson-section h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    min-height: 50px;
   }
   
   .countdown-timer {
+    font-size: 1.8rem;
+    padding: 12px 15px;
+  }
+  
+  .timetable-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .digital-clock {
     font-size: 2rem;
-    padding: 12px 20px;
+  }
+  
+  .lesson-section h3 {
+    font-size: 1.1rem;
+    min-height: auto;
+  }
+  
+  .countdown-timer {
+    font-size: 1.5rem;
+  }
+  
+  .timetable-lesson {
+    padding: 12px;
+    font-size: 0.9rem;
   }
 }
