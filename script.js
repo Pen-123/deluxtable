@@ -95,7 +95,7 @@ function getSubjectInfo(subject) {
   const lowerSubject = subject.toLowerCase();
   
   if (lowerSubject.includes('math') || lowerSubject.includes('maths')) {
-    return { icon: '𝑥', type: 'math' };
+    return { icon: '∑', type: 'math' };
   } else if (lowerSubject.includes('english')) {
     return { icon: 'A', type: 'english' };
   } else if (lowerSubject.includes('science')) {
@@ -197,6 +197,63 @@ function updateTimetable(lessons, currentLesson, nextLesson) {
   });
 }
 
+function updateBreakAndSchoolTimers(lessons, currentTimeInSeconds) {
+  const breakTimer = document.getElementById('breakTimer');
+  const schoolEndTimer = document.getElementById('schoolEndTimer');
+  
+  if (!lessons || lessons.length === 0) {
+    breakTimer.textContent = "No school";
+    schoolEndTimer.textContent = "No school";
+    return;
+  }
+  
+  // Find next break
+  let nextBreak = null;
+  for (let i = 0; i < lessons.length; i++) {
+    const lesson = lessons[i];
+    if (lesson.subject.toLowerCase().includes('break') || lesson.subject.includes('☕')) {
+      const breakStart = getTimeInSeconds(lesson.start);
+      const breakEnd = getTimeInSeconds(lesson.end);
+      
+      // If we're currently in a break
+      if (currentTimeInSeconds >= breakStart && currentTimeInSeconds < breakEnd) {
+        const timeLeftInBreak = breakEnd - currentTimeInSeconds;
+        breakTimer.textContent = formatCountdown(timeLeftInBreak);
+        breakTimer.parentElement.querySelector('.timer-label').textContent = 'Break Ends';
+        nextBreak = null; // We're in a break, so no "next break"
+        break;
+      }
+      // If this break is in the future
+      else if (currentTimeInSeconds < breakStart) {
+        nextBreak = lesson;
+        breakTimer.parentElement.querySelector('.timer-label').textContent = 'Next Break';
+        break;
+      }
+    }
+  }
+  
+  // Update break timer
+  if (nextBreak) {
+    const breakStart = getTimeInSeconds(nextBreak.start);
+    const timeUntilBreak = breakStart - currentTimeInSeconds;
+    breakTimer.textContent = formatCountdown(timeUntilBreak);
+  } else if (!breakTimer.textContent.includes(':')) {
+    // If we're not in a break and no next break found
+    breakTimer.textContent = "No more breaks";
+  }
+  
+  // Update school end timer
+  const lastLesson = lessons[lessons.length - 1];
+  const schoolEndTime = getTimeInSeconds(lastLesson.end);
+  const timeUntilSchoolEnds = schoolEndTime - currentTimeInSeconds;
+  
+  if (timeUntilSchoolEnds > 0) {
+    schoolEndTimer.textContent = formatCountdown(timeUntilSchoolEnds);
+  } else {
+    schoolEndTimer.textContent = "School ended";
+  }
+}
+
 function updateClock() {
   const now = new Date();
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -226,6 +283,7 @@ function updateClock() {
     document.getElementById('currentTimer').textContent = "🥳";
     document.getElementById('nextTimer').textContent = "🎉";
     
+    updateBreakAndSchoolTimers(null, 0);
     updateTimetable(null);
     return;
   }
@@ -277,6 +335,9 @@ function updateClock() {
     document.getElementById('nextLesson').textContent = "No more lessons today";
     document.getElementById('nextTimer').textContent = "00:00:00";
   }
+  
+  // Update break and school end timers
+  updateBreakAndSchoolTimers(todayLessons, currentTimeInSeconds);
   
   // Update timetable
   updateTimetable(todayLessons, currentLesson, nextLesson);
