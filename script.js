@@ -95,7 +95,7 @@ function getSubjectInfo(subject) {
   const lowerSubject = subject.toLowerCase();
   
   if (lowerSubject.includes('math') || lowerSubject.includes('maths')) {
-    return { icon: '∑', type: 'math' };
+    return { icon: '𝑥', type: 'math' };
   } else if (lowerSubject.includes('english')) {
     return { icon: 'A', type: 'english' };
   } else if (lowerSubject.includes('science')) {
