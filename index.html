@@ -3,17 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>7B Timetable</title>
+  <meta name="theme-color" content="#1A1A1A" />
+  <title>DeluxTable</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
+    <div class="app-bar">
+      <div class="brand">
+        <div class="brand-mark">D</div>
+        <div>
+          <div class="brand-name">DeluxTable</div>
+          <div class="brand-subtitle">Portable timetable • <span id="yearTitle">YEAR 8</span></div>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="importBtn" class="control-button" type="button">↥ Import</button>
+        <button id="exportBtn" class="control-button primary" type="button">↧ Export</button>
+      </div>
+    </div>
+
     <div class="clock-section">
       <div id="time" class="digital-clock">00:00:00 AM</div>
       <h2 id="day">Monday</h2>
     </div>
 
-    <!-- New Break and School End Timers -->
     <div class="top-timers">
       <div class="timer-card break-timer">
         <div class="timer-icon">☕</div>
@@ -22,7 +36,7 @@
           <div id="breakTimer" class="countdown-timer break-countdown">--:--:--</div>
         </div>
       </div>
-      
+
       <div class="timer-card school-end-timer">
         <div class="timer-icon">🎒</div>
         <div class="timer-content">
@@ -57,8 +71,49 @@
     </div>
   </div>
 
-  <!-- Creamo Button -->
-  <a href="https://creamo.pages.dev" class="creamo-button" target="_blank">
+  <div id="importModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="importTitle">
+      <button id="closeImportBtn" class="modal-close" type="button" aria-label="Close">×</button>
+      <div class="modal-icon">🗓️</div>
+      <h2 id="importTitle">Update your timetable</h2>
+      <p class="modal-description">
+        Export a tiny DeluxTable JSON file to share with everyone, or upload the school's timetable image and let OCR build it.
+      </p>
+
+      <label class="year-label" for="yearInput">Year</label>
+      <input id="yearInput" class="year-input" inputmode="numeric" maxlength="4" placeholder="8" />
+
+      <div class="import-grid">
+        <label class="import-card">
+          <input id="jsonFile" type="file" accept=".json,application/json" />
+          <span class="import-card-icon">📦</span>
+          <strong>Import JSON</strong>
+          <small>Best option for sharing an already-fixed timetable.</small>
+        </label>
+
+        <label class="import-card">
+          <input id="imageFile" type="file" accept="image/*" />
+          <span class="import-card-icon">📷</span>
+          <strong>Upload timetable image</strong>
+          <small>OCR understands the DeluxTable-style school grid and common abbreviations.</small>
+        </label>
+      </div>
+
+      <div class="ocr-status">
+        <div id="ocrStatus">Ready.</div>
+        <div class="ocr-progress-track"><div id="ocrProgress" class="ocr-progress"></div></div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="resetBtn" class="danger-button" type="button">Reset to Year 8</button>
+        <span>JSON stays local to this device.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <a href="https://creamo.pages.dev" class="creamo-button" target="_blank" rel="noopener">
     <span class="creamo-icon">✨</span>
     <span>Creamo</span>
   </a>
