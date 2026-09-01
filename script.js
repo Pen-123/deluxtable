@@ -20,8 +20,8 @@ const DEFAULT_TIMETABLE = {
     { start: "9:40 AM", end: "10:30 AM", subject: "Science" },
     { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
     { start: "10:50 AM", end: "11:40 AM", subject: "English" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "Science" },
-    { start: "12:30 PM", end: "1:20 PM", subject: "Arabic" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "Arabic" },
+    { start: "12:30 PM", end: "1:20 PM", subject: "Islamic" },
     { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
     { start: "1:50 PM", end: "2:40 PM", subject: "Maths" },
   ],
@@ -318,7 +318,7 @@ function looksLikeSchoolGrid(lines) {
 function buildKnownGridFromOCR(cells) {
   const expected = {
     Monday: ["Assembly","Arabic","Islamic","Break","English","Maths","Science","Lunch","Humanities"],
-    Tuesday: ["French","PE","Science","Break","English","Science","Arabic","Lunch","Maths"],
+    Tuesday: ["French","PE","Science","Break","English","Arabic","Islamic","Lunch","Maths"],
     Wednesday: ["Arabic","Science","ICT","Break","Maths","English","Music","Lunch","Humanities"],
     Thursday: ["PE","UAE Social Studies","Art","Break","Maths","English","Arabic","Lunch","Science"],
     Friday: ["MSC / MED","English","Break","Maths"]
