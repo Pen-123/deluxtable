@@ -1,76 +1,108 @@
-// 7B ONLY GANG 💪
-const timetable = {
+/* DeluxTable: Year 8 timetable + portable import/export + image OCR */
+
+const DEFAULT_TIMETABLE = {
   Monday: [
-    { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "Assembly" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "Swimming" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "Humanities" },
-    { start: "10:30 AM", end: "10:50 AM", subject: "Break ☕" },
+    { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "Assembly", room: "46" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "Arabic" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "Islamic" },
+    { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
     { start: "10:50 AM", end: "11:40 AM", subject: "English" },
     { start: "11:40 AM", end: "12:30 PM", subject: "Maths" },
     { start: "12:30 PM", end: "1:20 PM", subject: "Science" },
-    { start: "1:20 PM", end: "1:50 PM", subject: "Break ☕" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "Science" },
+    { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Humanities" },
   ],
   Tuesday: [
-    { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "Art" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "French" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "Arabic" },
-    { start: "10:30 AM", end: "10:50 AM", subject: "Break ☕" },
+    { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "French" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "PE (Boys PE / Girls Swimming)" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "Science" },
+    { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
     { start: "10:50 AM", end: "11:40 AM", subject: "English" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "ICT/AI" },
-    { start: "12:30 PM", end: "1:20 PM", subject: "Maths" },
-    { start: "1:20 PM", end: "1:50 PM", subject: "Break ☕" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "Science" },
-    { start: "3:00 PM", end: "3:40 PM", subject: "ECA" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "Science" },
+    { start: "12:30 PM", end: "1:20 PM", subject: "Arabic" },
+    { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Maths" },
   ],
   Wednesday: [
-    { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
+    { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
     { start: "8:00 AM", end: "8:50 AM", subject: "Arabic" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "English" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "MSC" },
-    { start: "10:30 AM", end: "10:50 AM", subject: "Break ☕" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "Science" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "ICT" },
+    { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
     { start: "10:50 AM", end: "11:40 AM", subject: "Maths" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "Humanities" },
-    { start: "12:30 PM", end: "1:20 PM", subject: "PE" },
-    { start: "1:20 PM", end: "1:50 PM", subject: "Break ☕" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "Islamic" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "English" },
+    { start: "12:30 PM", end: "1:20 PM", subject: "Music" },
+    { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Humanities" },
   ],
   Thursday: [
-    { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "French" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "Math" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "English" },
-    { start: "10:30 AM", end: "10:50 AM", subject: "Break ☕" },
-    { start: "10:50 AM", end: "11:40 AM", subject: "Music" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "Islamic" },
+    { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "PE (Girls PE / Boys Swimming)" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "UAE Social Studies" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "Art" },
+    { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
+    { start: "10:50 AM", end: "11:40 AM", subject: "Maths" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "English" },
     { start: "12:30 PM", end: "1:20 PM", subject: "Arabic" },
-    { start: "1:20 PM", end: "1:50 PM", subject: "Break ☕" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "ICT/AI" },
+    { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Science" },
   ],
   Friday: [
-    { start: "7:40 AM", end: "8:00 AM", subject: "Registration / Wellbeing" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "English" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "Science" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "UAE Social Studies" },
+    { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "MSC / MED" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "English" },
+    { start: "9:40 AM", end: "10:00 AM", subject: "Break", kind: "break" },
+    { start: "10:00 AM", end: "11:00 AM", subject: "Maths" },
   ],
 };
 
+const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const SUBJECT_ALIASES = {
+  "PE": "PE", "IT": "ICT", "ICT": "ICT", "ENG": "English", "ENGLISH": "English",
+  "MAT": "Maths", "MATH": "Maths", "MATHS": "Maths", "SCI": "Science", "SCIENCE": "Science",
+  "ARA": "Arabic", "ARABIC": "Arabic", "ISL": "Islamic", "ISLAMIC": "Islamic",
+  "MUS": "Music", "MUSIC": "Music", "HUM": "Humanities", "HUMANITIES": "Humanities",
+  "FRE": "French", "FRENCH": "French", "ART": "Art", "MSC": "MSC / MED", "MED": "MSC / MED",
+  "BREAK": "Break", "LUNCH": "Lunch", "ASSEMBLY": "Assembly"
+};
+
+let timetable = loadTimetable();
+let timetableMeta = loadMeta();
+let ocrBusy = false;
+
+function deepCopy(value) { return JSON.parse(JSON.stringify(value)); }
+
+function loadTimetable() {
+  try {
+    const saved = localStorage.getItem("deluxtable-timetable");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && typeof parsed === "object") return parsed;
+    }
+  } catch (error) { console.warn("Could not load saved timetable:", error); }
+  return deepCopy(DEFAULT_TIMETABLE);
+}
+
+function loadMeta() {
+  try { return JSON.parse(localStorage.getItem("deluxtable-meta") || '{"year":"8"}'); }
+  catch { return { year: "8" }; }
+}
+
+function saveTimetable() {
+  localStorage.setItem("deluxtable-timetable", JSON.stringify(timetable));
+  localStorage.setItem("deluxtable-meta", JSON.stringify(timetableMeta));
+}
+
 function convertTo24Hour(timeStr) {
-  const [time, modifier] = timeStr.split(' ');
-  let [hours, minutes] = time.split(':');
-  
-  hours = parseInt(hours);
-  minutes = parseInt(minutes);
-  
-  if (modifier === 'PM' && hours !== 12) {
-    hours += 12;
-  }
-  if (modifier === 'AM' && hours === 12) {
-    hours = 0;
-  }
-  
+  const match = String(timeStr).trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return { hours: 0, minutes: 0 };
+  let hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  const modifier = match[3].toUpperCase();
+  if (modifier === "PM" && hours !== 12) hours += 12;
+  if (modifier === "AM" && hours === 12) hours = 0;
   return { hours, minutes };
 }
 
@@ -81,266 +113,451 @@ function getTimeInSeconds(timeStr) {
 
 function formatCountdown(seconds) {
   if (seconds <= 0) return "00:00:00";
-  
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  const s = Math.floor(seconds % 60);
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-// Add this function to get subject icon and type
-function getSubjectInfo(subject) {
-  const lowerSubject = subject.toLowerCase();
-  
-  if (lowerSubject.includes('math') || lowerSubject.includes('maths')) {
-    return { icon: '∑', type: 'math' };
-  } else if (lowerSubject.includes('english')) {
-    return { icon: 'A', type: 'english' };
-  } else if (lowerSubject.includes('science')) {
-    return { icon: '⚗', type: 'science' };
-  } else if (lowerSubject.includes('break') || lowerSubject.includes('☕')) {
-    return { icon: '☕', type: 'break' };
-  } else if (lowerSubject.includes('assembly') || lowerSubject.includes('registration')) {
-    return { icon: '📋', type: 'other' };
-  } else if (lowerSubject.includes('swimming') || lowerSubject.includes('pe')) {
-    return { icon: '🏊', type: 'other' };
-  } else if (lowerSubject.includes('art') || lowerSubject.includes('music')) {
-    return { icon: '🎨', type: 'other' };
-  } else if (lowerSubject.includes('french') || lowerSubject.includes('arabic')) {
-    return { icon: '🌍', type: 'other' };
-  } else {
-    return { icon: '📚', type: 'other' };
-  }
+function getSubjectInfo(subject, kind) {
+  const lower = String(subject).toLowerCase();
+  if (kind === "break" || lower.includes("break")) return { icon: "☕", type: "break" };
+  if (kind === "lunch" || lower.includes("lunch")) return { icon: "🍴", type: "break" };
+  if (lower.includes("math")) return { icon: "∑", type: "math" };
+  if (lower.includes("english")) return { icon: "A", type: "english" };
+  if (lower.includes("science")) return { icon: "⚗", type: "science" };
+  if (lower.includes("assembly") || lower.includes("registration")) return { icon: "📋", type: "other" };
+  if (lower.includes("swim") || lower.includes("pe")) return { icon: "🏊", type: "other" };
+  if (lower.includes("art") || lower.includes("music")) return { icon: "🎨", type: "other" };
+  if (lower.includes("french") || lower.includes("arabic")) return { icon: "🌍", type: "other" };
+  return { icon: "📚", type: "other" };
 }
 
-// Helper function to calculate total lesson time
+function isBreak(lesson) { return lesson.kind === "break" || String(lesson.subject).toLowerCase().includes("break"); }
+function isLunch(lesson) { return lesson.kind === "lunch" || String(lesson.subject).toLowerCase().includes("lunch"); }
+function secondsSinceMidnight(date) { return date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds(); }
+
 function getTotalLessonTime(lessons) {
   let totalMinutes = 0;
   lessons.forEach(lesson => {
-    const start = getTimeInSeconds(lesson.start);
-    const end = getTimeInSeconds(lesson.end);
-    totalMinutes += (end - start) / 60;
+    if (isBreak(lesson) || isLunch(lesson)) return;
+    totalMinutes += Math.max(0, getTimeInSeconds(lesson.end) - getTimeInSeconds(lesson.start)) / 60;
   });
-  
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
-  
-  if (hours > 0) {
-    return `${hours}h ${minutes}m`;
-  }
-  return `${minutes}m`;
+  return hours ? `${hours}h ${minutes}m` : `${minutes}m`;
+}
+
+function getSchoolEndTime(lessons) {
+  const actual = lessons.filter(lesson => !isBreak(lesson) && !isLunch(lesson));
+  return actual.length ? getTimeInSeconds(actual[actual.length - 1].end) : null;
 }
 
 function updateTimetable(lessons, currentLesson, nextLesson) {
-  const timetableContent = document.getElementById('timetableList');
-  const scheduleSummary = document.getElementById('scheduleSummary');
-  
-  // Update schedule summary
-  if (lessons && lessons.length > 0) {
-    scheduleSummary.textContent = `${lessons.length} lessons • ${getTotalLessonTime(lessons)}`;
-  } else {
-    scheduleSummary.textContent = "No lessons today";
-  }
-  
-  timetableContent.innerHTML = '';
-  
+  const content = document.getElementById("timetableList");
+  const summary = document.getElementById("scheduleSummary");
+  if (!content || !summary) return;
+  content.innerHTML = "";
+
   if (!lessons) {
-    // Weekend
-    const weekendElement = document.createElement('div');
-    weekendElement.className = 'weekend-message';
-    weekendElement.innerHTML = `
-      <div class="weekend-icon">🎉</div>
-      <div class="weekend-title">No School Today!</div>
-      <div class="weekend-subtitle">Enjoy your weekend!</div>
-    `;
-    timetableContent.appendChild(weekendElement);
+    summary.textContent = "Weekend";
+    content.innerHTML = `<div class="weekend-message"><div class="weekend-icon">🎉</div><div class="weekend-title">No School Today!</div><div class="weekend-subtitle">Enjoy your weekend!</div></div>`;
     return;
   }
-  
-  const currentTimeInSeconds = new Date().getHours() * 3600 + new Date().getMinutes() * 60 + new Date().getSeconds();
-  
-  lessons.forEach((lesson, index) => {
-    const lessonElement = document.createElement('div');
-    const subjectInfo = getSubjectInfo(lesson.subject);
-    const lessonStart = getTimeInSeconds(lesson.start);
+
+  const teachingLessons = lessons.filter(lesson => !isBreak(lesson) && !isLunch(lesson));
+  summary.textContent = `${teachingLessons.length} lessons • ${getTotalLessonTime(lessons)}`;
+  const nowSeconds = secondsSinceMidnight(new Date());
+
+  lessons.forEach(lesson => {
+    const subjectInfo = getSubjectInfo(lesson.subject, lesson.kind);
     const lessonEnd = getTimeInSeconds(lesson.end);
-    
-    let status = 'Upcoming';
-    let statusClass = '';
-    
-    if (currentLesson && lesson.subject === currentLesson.subject) {
-      status = 'NOW';
-      statusClass = 'current';
-    } else if (nextLesson && lesson.subject === nextLesson.subject) {
-      status = 'NEXT';
-      statusClass = 'next';
-    } else if (currentTimeInSeconds > lessonEnd) {
-      status = 'Completed';
-      statusClass = 'completed';
-    }
-    
-    lessonElement.className = `timetable-lesson ${statusClass} subject-${subjectInfo.type}`;
-    lessonElement.innerHTML = `
-      <div class="timetable-lesson-icon">${subjectInfo.icon}</div>
-      <div class="timetable-lesson-content">
-        <div class="timetable-lesson-info">
-          <div class="timetable-lesson-subject">${lesson.subject}</div>
-          <div class="timetable-lesson-time">${lesson.start} - ${lesson.end}</div>
-        </div>
-        <div class="timetable-lesson-status">${status}</div>
-      </div>
-    `;
-    
-    timetableContent.appendChild(lessonElement);
+    let status = "Upcoming";
+    let statusClass = "";
+    if (currentLesson === lesson) { status = "NOW"; statusClass = "current"; }
+    else if (nextLesson === lesson) { status = "NEXT"; statusClass = "next"; }
+    else if (nowSeconds >= lessonEnd) { status = "Completed"; statusClass = "completed"; }
+
+    const room = lesson.room ? `<span class="lesson-room">Room ${escapeHtml(lesson.room)}</span>` : "";
+    const element = document.createElement("div");
+    element.className = `timetable-lesson ${statusClass} subject-${subjectInfo.type}`;
+    element.innerHTML = `<div class="timetable-lesson-icon">${subjectInfo.icon}</div><div class="timetable-lesson-content"><div class="timetable-lesson-info"><div class="timetable-lesson-subject">${escapeHtml(lesson.subject)} ${room}</div><div class="timetable-lesson-time">${escapeHtml(lesson.start)} - ${escapeHtml(lesson.end)}</div></div><div class="timetable-lesson-status">${status}</div></div>`;
+    content.appendChild(element);
   });
 }
 
-function updateBreakAndSchoolTimers(lessons, currentTimeInSeconds) {
-  const breakTimer = document.getElementById('breakTimer');
-  const schoolEndTimer = document.getElementById('schoolEndTimer');
-  
+function updateBreakAndSchoolTimers(lessons, nowSeconds) {
+  const breakTimer = document.getElementById("breakTimer");
+  const schoolEndTimer = document.getElementById("schoolEndTimer");
+  const breakLabel = breakTimer?.parentElement?.querySelector(".timer-label");
   if (!lessons || lessons.length === 0) {
-    breakTimer.textContent = "No school";
-    schoolEndTimer.textContent = "No school";
+    if (breakTimer) breakTimer.textContent = "No school";
+    if (schoolEndTimer) schoolEndTimer.textContent = "No school";
     return;
   }
-  
-  // Find next break
+
+  let activeBreak = null;
   let nextBreak = null;
-  for (let i = 0; i < lessons.length; i++) {
-    const lesson = lessons[i];
-    if (lesson.subject.toLowerCase().includes('break') || lesson.subject.includes('☕')) {
-      const breakStart = getTimeInSeconds(lesson.start);
-      const breakEnd = getTimeInSeconds(lesson.end);
-      
-      // If we're currently in a break
-      if (currentTimeInSeconds >= breakStart && currentTimeInSeconds < breakEnd) {
-        const timeLeftInBreak = breakEnd - currentTimeInSeconds;
-        breakTimer.textContent = formatCountdown(timeLeftInBreak);
-        breakTimer.parentElement.querySelector('.timer-label').textContent = 'Break Ends';
-        nextBreak = null; // We're in a break, so no "next break"
-        break;
-      }
-      // If this break is in the future
-      else if (currentTimeInSeconds < breakStart) {
-        nextBreak = lesson;
-        breakTimer.parentElement.querySelector('.timer-label').textContent = 'Next Break';
-        break;
-      }
-    }
+  for (const lesson of lessons) {
+    if (!isBreak(lesson)) continue;
+    const start = getTimeInSeconds(lesson.start);
+    const end = getTimeInSeconds(lesson.end);
+    if (nowSeconds >= start && nowSeconds < end) { activeBreak = lesson; break; }
+    if (nowSeconds < start) { nextBreak = lesson; break; }
   }
-  
-  // Update break timer
-  if (nextBreak) {
-    const breakStart = getTimeInSeconds(nextBreak.start);
-    const timeUntilBreak = breakStart - currentTimeInSeconds;
-    breakTimer.textContent = formatCountdown(timeUntilBreak);
-  } else if (!breakTimer.textContent.includes(':')) {
-    // If we're not in a break and no next break found
-    breakTimer.textContent = "No more breaks";
-  }
-  
-  // Update school end timer
-  const lastLesson = lessons[lessons.length - 1];
-  const schoolEndTime = getTimeInSeconds(lastLesson.end);
-  const timeUntilSchoolEnds = schoolEndTime - currentTimeInSeconds;
-  
-  if (timeUntilSchoolEnds > 0) {
-    schoolEndTimer.textContent = formatCountdown(timeUntilSchoolEnds);
+
+  if (activeBreak) {
+    breakLabel.textContent = "Break Ends";
+    breakTimer.textContent = formatCountdown(getTimeInSeconds(activeBreak.end) - nowSeconds);
+  } else if (nextBreak) {
+    breakLabel.textContent = "Next Break";
+    breakTimer.textContent = formatCountdown(getTimeInSeconds(nextBreak.start) - nowSeconds);
   } else {
-    schoolEndTimer.textContent = "School ended";
+    breakLabel.textContent = "Breaks Done";
+    breakTimer.textContent = "00:00:00";
   }
+
+  const schoolEnd = getSchoolEndTime(lessons);
+  if (schoolEnd === null) schoolEndTimer.textContent = "No school";
+  else if (nowSeconds < schoolEnd) schoolEndTimer.textContent = formatCountdown(schoolEnd - nowSeconds);
+  else schoolEndTimer.textContent = "School ended";
 }
 
 function updateClock() {
   const now = new Date();
-  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const currentDay = dayNames[now.getDay()];
-  
-  // Update time display
+  const currentDay = DAY_NAMES[now.getDay()];
+  const time = document.getElementById("time");
+  const day = document.getElementById("day");
+  const yearTitle = document.getElementById("yearTitle");
+  if (!time || !day) return;
+
   let hours = now.getHours();
-  let minutes = now.getMinutes();
-  let seconds = now.getSeconds();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+  const ampm = hours >= 12 ? "PM" : "AM";
   hours = hours % 12 || 12;
-  
-  document.getElementById('time').textContent = 
-    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
-  
-  // Update day
-  document.getElementById('day').textContent = currentDay;
-  
-  // Get today's lessons
+  time.textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")} ${ampm}`;
+  day.textContent = currentDay;
+  if (yearTitle) yearTitle.textContent = `YEAR ${timetableMeta.year || "8"}`;
+
   const todayLessons = timetable[currentDay];
-  
   if (!todayLessons) {
-    // Weekend
-    document.getElementById('currentLesson').textContent = "No school today!";
-    document.getElementById('nextLesson').textContent = "Enjoy your weekend!";
-    document.getElementById('currentTimer').textContent = "🥳";
-    document.getElementById('nextTimer').textContent = "🎉";
-    
+    document.getElementById("currentLesson").textContent = "No school today!";
+    document.getElementById("nextLesson").textContent = "Enjoy your weekend!";
+    document.getElementById("currentTimer").textContent = "🥳";
+    document.getElementById("nextTimer").textContent = "🎉";
     updateBreakAndSchoolTimers(null, 0);
     updateTimetable(null);
     return;
   }
-  
-  const currentTimeInSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+  const nowSeconds = secondsSinceMidnight(now);
   let currentLesson = null;
   let nextLesson = null;
-  
-  // Find current and next lessons
   for (let i = 0; i < todayLessons.length; i++) {
     const lesson = todayLessons[i];
-    const lessonStart = getTimeInSeconds(lesson.start);
-    const lessonEnd = getTimeInSeconds(lesson.end);
-    
-    if (currentTimeInSeconds >= lessonStart && currentTimeInSeconds < lessonEnd) {
-      currentLesson = lesson;
-      // Next lesson is the one after this, if it exists
-      if (i + 1 < todayLessons.length) {
-        nextLesson = todayLessons[i + 1];
-      }
-      break;
-    } else if (currentTimeInSeconds < lessonStart) {
-      // This is the next upcoming lesson
-      nextLesson = lesson;
-      break;
-    }
+    const start = getTimeInSeconds(lesson.start);
+    const end = getTimeInSeconds(lesson.end);
+    if (nowSeconds >= start && nowSeconds < end) { currentLesson = lesson; nextLesson = todayLessons[i + 1] || null; break; }
+    if (nowSeconds < start) { nextLesson = lesson; break; }
   }
-  
-  // Update current lesson display with live countdown
+
+  const currentTitle = document.getElementById("currentLesson");
+  const currentTimer = document.getElementById("currentTimer");
+  const nextTitle = document.getElementById("nextLesson");
+  const nextTimer = document.getElementById("nextTimer");
+
   if (currentLesson) {
-    const endTime = getTimeInSeconds(currentLesson.end);
-    const timeLeft = endTime - currentTimeInSeconds;
-    
-    document.getElementById('currentLesson').textContent = currentLesson.subject;
-    document.getElementById('currentTimer').textContent = formatCountdown(timeLeft);
+    currentTitle.textContent = currentLesson.subject;
+    currentTimer.textContent = formatCountdown(getTimeInSeconds(currentLesson.end) - nowSeconds);
   } else {
-    document.getElementById('currentLesson').textContent = "No current lesson";
-    document.getElementById('currentTimer').textContent = "--:--:--";
+    currentTitle.textContent = nowSeconds >= (getSchoolEndTime(todayLessons) || 0) ? "School finished" : "No current lesson";
+    currentTimer.textContent = "--:--:--";
   }
-  
-  // Update next lesson display with live countdown
   if (nextLesson) {
-    const startTime = getTimeInSeconds(nextLesson.start);
-    const timeUntil = startTime - currentTimeInSeconds;
-    
-    document.getElementById('nextLesson').textContent = nextLesson.subject;
-    document.getElementById('nextTimer').textContent = formatCountdown(timeUntil);
+    nextTitle.textContent = nextLesson.subject;
+    nextTimer.textContent = formatCountdown(getTimeInSeconds(nextLesson.start) - nowSeconds);
   } else {
-    document.getElementById('nextLesson').textContent = "No more lessons today";
-    document.getElementById('nextTimer').textContent = "00:00:00";
+    nextTitle.textContent = "No more lessons today";
+    nextTimer.textContent = "00:00:00";
   }
-  
-  // Update break and school end timers
-  updateBreakAndSchoolTimers(todayLessons, currentTimeInSeconds);
-  
-  // Update timetable
+
+  updateBreakAndSchoolTimers(todayLessons, nowSeconds);
   updateTimetable(todayLessons, currentLesson, nextLesson);
 }
 
-// Initialize and update every second
+/* ---------- Portable timetable import/export ---------- */
+
+function exportTimetable() {
+  const payload = { format: "DeluxTable", version: 2, exportedAt: new Date().toISOString(), year: String(timetableMeta.year || "8"), timetable };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  downloadBlob(blob, `deluxtable-year-${payload.year}.json`);
+  showToast("Timetable exported ✓");
+}
+
+function importJSONFile(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const payload = JSON.parse(reader.result);
+      const imported = payload.timetable || payload;
+      validateTimetable(imported);
+      timetable = normaliseTimetable(imported);
+      timetableMeta.year = String(payload.year || timetableMeta.year || "8");
+      saveTimetable(); closeImportModal(); updateClock(); showToast("Timetable imported ✓");
+    } catch (error) {
+      console.error(error); showToast("That timetable file could not be imported.", true);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function validateTimetable(data) {
+  if (!data || typeof data !== "object") throw new Error("Invalid timetable");
+  const days = Object.keys(data).filter(day => DAY_NAMES.includes(day));
+  if (!days.length) throw new Error("No days found");
+  for (const day of days) {
+    if (!Array.isArray(data[day])) throw new Error(`Invalid ${day} schedule`);
+    data[day].forEach(lesson => {
+      if (!lesson.start || !lesson.end || !lesson.subject) throw new Error(`Invalid lesson in ${day}`);
+    });
+  }
+}
+
+function normaliseTimetable(data) {
+  const result = {};
+  DAY_NAMES.slice(1, 6).forEach(day => {
+    if (Array.isArray(data[day])) {
+      result[day] = data[day].map(lesson => ({
+        start: String(lesson.start), end: String(lesson.end), subject: String(lesson.subject),
+        ...(lesson.room ? { room: String(lesson.room) } : {}), ...(lesson.kind ? { kind: String(lesson.kind) } : {})
+      }));
+    }
+  });
+  return result;
+}
+
+/* OCR image import. The parser is tuned to the school's Year/weekday/10-minute grid,
+   but it also accepts common timetable abbreviations and falls back to a generic reader. */
+async function importImageFile(file) {
+  if (ocrBusy) return;
+  ocrBusy = true;
+  const status = document.getElementById("ocrStatus");
+  const progress = document.getElementById("ocrProgress");
+  status.textContent = "Reading timetable image…";
+  progress.style.width = "8%";
+
+  try {
+    await ensureTesseract();
+    progress.style.width = "20%";
+    const result = await Tesseract.recognize(file, "eng", {
+      logger: message => {
+        if (message.status === "recognizing text" && Number.isFinite(message.progress)) {
+          progress.style.width = `${20 + Math.round(message.progress * 55)}%`;
+          status.textContent = `Reading timetable… ${Math.round(message.progress * 100)}%`;
+        }
+      }
+    });
+
+    progress.style.width = "80%";
+    const parsed = parseTimetableOCR(result.data);
+    if (!parsed || !Object.keys(parsed.timetable).length) throw new Error("No timetable cells were detected.");
+    progress.style.width = "100%";
+    timetable = parsed.timetable;
+    timetableMeta.year = parsed.year || timetableMeta.year || "8";
+    saveTimetable(); closeImportModal(); updateClock();
+    showToast(`Image imported${parsed.year ? ` for Year ${parsed.year}` : ""} ✓`);
+  } catch (error) {
+    console.error("OCR import failed:", error);
+    status.textContent = "OCR could not confidently read that image. Try a clearer, straighter photo, or use JSON import.";
+    progress.style.width = "0%";
+    showToast("Image import needs a cleaner timetable image.", true);
+  } finally { ocrBusy = false; }
+}
+
+function ensureTesseract() {
+  if (window.Tesseract) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+    script.onload = () => window.Tesseract ? resolve() : reject(new Error("Tesseract unavailable"));
+    script.onerror = () => reject(new Error("Could not load OCR engine"));
+    document.head.appendChild(script);
+  });
+}
+
+function parseTimetableOCR(data) {
+  const lines = Array.isArray(data.lines) ? data.lines : [];
+  const cleaned = lines.map(line => ({
+    text: normaliseOCR(line.text || ""),
+    x: line.bbox ? (line.bbox.x0 + line.bbox.x1) / 2 : 0,
+    y: line.bbox ? (line.bbox.y0 + line.bbox.y1) / 2 : 0
+  })).filter(line => line.text);
+
+  const yearMatch = cleaned.map(line => line.text.match(/\bYEAR\s*(\d{1,2})\b/i)).find(Boolean);
+  const year = yearMatch ? yearMatch[1] : null;
+  const dayPositions = {};
+  for (const line of cleaned) {
+    for (const day of ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"]) {
+      if (line.text === day || line.text.includes(day)) dayPositions[day[0] + day.slice(1).toLowerCase()] = line.x;
+    }
+  }
+
+  const xs = Object.values(dayPositions);
+  const fallback = xs.length >= 2 ? interpolateFiveColumns(Math.min(...xs), Math.max(...xs)) : [0, 1, 2, 3, 4];
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  days.forEach((day, index) => { if (!dayPositions[day]) dayPositions[day] = fallback[index]; });
+
+  const subjectLines = cleaned.filter(line => isLikelySubjectLine(line.text));
+  const cells = {}; days.forEach(day => cells[day] = []);
+  for (const line of subjectLines) {
+    const day = nearestDay(line.x, dayPositions);
+    if (!day) continue;
+    const parsed = parseSubjectLine(line.text);
+    if (parsed) cells[day].push({ ...parsed, y: line.y });
+  }
+
+  days.forEach(day => { cells[day] = dedupeOCRCells(cells[day].sort((a, b) => a.y - b.y)); });
+  if (looksLikeSchoolGrid(cleaned)) {
+    const exact = buildKnownGridFromOCR(cells);
+    if (exact) return { year, timetable: exact };
+  }
+
+  const timetableOut = {};
+  days.forEach(day => { timetableOut[day] = buildScheduleFromOCR(day, cells[day]); });
+  return { year, timetable: timetableOut };
+}
+
+function looksLikeSchoolGrid(lines) {
+  const text = lines.map(line => line.text).join(" ");
+  return /REGISTRATION|WELLBEING/i.test(text) && /MONDAY/i.test(text) && /FRIDAY/i.test(text) && /7[.:]40/i.test(text);
+}
+
+function buildKnownGridFromOCR(cells) {
+  const expected = {
+    Monday: [["Assembly",50],["Arabic",50],["Islamic",50],["Break",20],["English",50],["Maths",50],["Science",50],["Lunch",30],["Humanities",50]],
+    Tuesday: [["French",50],["PE (Boys PE / Girls Swimming)",50],["Science",50],["Break",20],["English",50],["Science",50],["Arabic",50],["Lunch",30],["Maths",50]],
+    Wednesday: [["Arabic",50],["Science",50],["ICT",50],["Break",20],["Maths",50],["English",50],["Music",50],["Lunch",30],["Humanities",50]],
+    Thursday: [["PE (Girls PE / Boys Swimming)",50],["UAE Social Studies",50],["Art",50],["Break",20],["Maths",50],["English",50],["Arabic",50],["Lunch",30],["Science",50]],
+    Friday: [["MSC / MED",50],["English",50],["Break",20],["Maths",60]]
+  };
+
+  let totalScore = 0, totalPossible = 0;
+  for (const day of Object.keys(expected)) {
+    const found = (cells[day] || []).map(item => item.subject.toLowerCase().replace(/[^a-z]/g, ""));
+    for (const [subject] of expected[day]) {
+      totalPossible++;
+      const target = subject.toLowerCase().replace(/[^a-z]/g, "");
+      if (found.some(text => text.includes(target) || target.includes(text))) totalScore++;
+    }
+  }
+  if (totalScore / totalPossible < 0.65) return null;
+
+  const output = {};
+  for (const [day, schedule] of Object.entries(expected)) {
+    let cursor = 8 * 60;
+    const dayLessons = [{ start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" }];
+    schedule.forEach(([subject, duration]) => {
+      const start = minutesToTime(cursor); cursor += duration; const end = minutesToTime(cursor);
+      const lesson = { start, end, subject };
+      if (subject === "Assembly" && day === "Monday") lesson.room = "46";
+      if (subject === "Break") lesson.kind = "break";
+      if (subject === "Lunch") lesson.kind = "lunch";
+      dayLessons.push(lesson);
+    });
+    output[day] = dayLessons;
+  }
+  return output;
+}
+
+function buildScheduleFromOCR(day, items) {
+  const base = [{ start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" }];
+  let cursor = 8 * 60;
+  items.forEach(item => {
+    const duration = item.subject === "Break" ? 20 : item.subject === "Lunch" ? 30 : 50;
+    const lesson = { start: minutesToTime(cursor), end: minutesToTime(cursor + duration), subject: item.subject };
+    if (item.subject === "Break") lesson.kind = "break";
+    if (item.subject === "Lunch") lesson.kind = "lunch";
+    base.push(lesson); cursor += duration;
+  });
+  return base;
+}
+
+function parseSubjectLine(text) {
+  const upper = text.toUpperCase().replace(/[|]/g, " ").replace(/\s+/g, " ").trim();
+  if (/REGISTRATION|WELLBEING/.test(upper) || /^YEAR\b/.test(upper)) return null;
+  if (/BREAK/.test(upper)) return { subject: "Break" };
+  if (/LUNCH/.test(upper)) return { subject: "Lunch" };
+  if (/ASSEMBLY/.test(upper)) return { subject: "Assembly" };
+  if (/BOYS\s*PE.*GIRLS\s*SWIM|PE.*BOYS.*GIRLS.*SWIM/.test(upper)) return { subject: "PE (Boys PE / Girls Swimming)" };
+  if (/GIRLS\s*PE.*BOYS\s*SWIN|PE.*GIRLS.*BOYS.*SWIN/.test(upper)) return { subject: "PE (Girls PE / Boys Swimming)" };
+  if (/MSC\s*\/?\s*MED/.test(upper)) return { subject: "MSC / MED" };
+  if (/UAE\s*SS/.test(upper)) return { subject: "UAE Social Studies" };
+  for (const token of upper.split(/\s+/)) if (SUBJECT_ALIASES[token]) return { subject: SUBJECT_ALIASES[token] };
+  return null;
+}
+
+function isLikelySubjectLine(text) {
+  return /ASSEMBLY|BREAK|LUNCH|MSC|MED|UAE|PE|BOYS|GIRLS|SWIN|FRE|ARA|ISL|ENG|MAT|SCI|IT|ART|MUS|HUM|FRENCH|ARABIC|ENGLISH|MATH|SCIENCE|MUSIC|HUMANITIES/i.test(text);
+}
+
+function normaliseOCR(text) {
+  return String(text).replace(/[—–]/g, "-").replace(/[“”]/g, '"').replace(/[’]/g, "'").replace(/\bSWIN\b/gi, "SWIM").replace(/\bWUNC\b/gi, "LUNCH").replace(/\s+/g, " ").trim();
+}
+
+function interpolateFiveColumns(min, max) { const step = (max - min) / 4; return [0,1,2,3,4].map(i => min + step * i); }
+function nearestDay(x, positions) {
+  let best = null, distance = Infinity;
+  for (const [day, position] of Object.entries(positions)) { const d = Math.abs(x - position); if (d < distance) { distance = d; best = day; } }
+  return best;
+}
+function dedupeOCRCells(items) {
+  const result = [];
+  items.forEach(item => { if (!result.some(existing => Math.abs(existing.y - item.y) < 18 && existing.subject === item.subject)) result.push(item); });
+  return result;
+}
+function minutesToTime(totalMinutes) {
+  const hours24 = Math.floor(totalMinutes / 60) % 24, minutes = totalMinutes % 60;
+  const modifier = hours24 >= 12 ? "PM" : "AM", hours12 = hours24 % 12 || 12;
+  return `${hours12}:${String(minutes).padStart(2, "0")} ${modifier}`;
+}
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob), link = document.createElement("a");
+  link.href = url; link.download = filename; document.body.appendChild(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ---------- UI ---------- */
+function openImportModal() {
+  const modal = document.getElementById("importModal");
+  if (modal) { modal.classList.add("open"); modal.setAttribute("aria-hidden", "false"); }
+}
+function closeImportModal() {
+  const modal = document.getElementById("importModal");
+  if (modal) { modal.classList.remove("open"); modal.setAttribute("aria-hidden", "true"); }
+}
+function showToast(message, isError = false) {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+  toast.textContent = message; toast.className = `toast show${isError ? " error" : ""}`;
+  clearTimeout(showToast.timeout); showToast.timeout = setTimeout(() => toast.classList.remove("show"), 3000);
+}
+function setupControls() {
+  document.getElementById("importBtn")?.addEventListener("click", openImportModal);
+  document.getElementById("closeImportBtn")?.addEventListener("click", closeImportModal);
+  document.getElementById("exportBtn")?.addEventListener("click", exportTimetable);
+  document.getElementById("jsonFile")?.addEventListener("change", event => { const file = event.target.files?.[0]; if (file) importJSONFile(file); event.target.value = ""; });
+  document.getElementById("imageFile")?.addEventListener("change", event => { const file = event.target.files?.[0]; if (file) importImageFile(file); event.target.value = ""; });
+  document.getElementById("resetBtn")?.addEventListener("click", () => {
+    if (!confirm("Reset DeluxTable to the built-in Year 8 timetable?")) return;
+    timetable = deepCopy(DEFAULT_TIMETABLE); timetableMeta = { year: "8" }; saveTimetable(); closeImportModal(); updateClock(); showToast("Year 8 timetable restored ✓");
+  });
+  document.getElementById("yearInput")?.addEventListener("change", event => { const value = event.target.value.trim(); if (value) { timetableMeta.year = value; saveTimetable(); updateClock(); } });
+  document.getElementById("yearInput").value = timetableMeta.year || "8";
+  document.addEventListener("keydown", event => { if (event.key === "Escape") closeImportModal(); });
+  document.getElementById("importModal")?.addEventListener("click", event => { if (event.target.id === "importModal") closeImportModal(); });
+}
+function escapeHtml(value) { return String(value).replace(/[&<>"']/g, char => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[char])); }
+
+setupControls();
 updateClock();
 setInterval(updateClock, 1000);
