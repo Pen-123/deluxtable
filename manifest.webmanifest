@@ -1,0 +1,10 @@
+{
+  "name": "DeluxTable",
+  "short_name": "DeluxTable",
+  "description": "Portable school timetable",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#1A1A1A",
+  "theme_color": "#1A1A1A",
+  "icons": []
+}
