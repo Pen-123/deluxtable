@@ -4,57 +4,57 @@ const DEFAULT_TIMETABLE = {
   Monday: [
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
     { start: "8:00 AM", end: "8:50 AM", subject: "Assembly", room: "46" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "Arabic" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "Islamic" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "Arabic (A - AYS 49; B - EMA/NEA 54/27)" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "Islamic (A - ASA 62; B - ADM 25; PSHE - REV)" },
     { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
-    { start: "10:50 AM", end: "11:40 AM", subject: "English" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "Maths" },
-    { start: "12:30 PM", end: "1:20 PM", subject: "Science" },
+    { start: "10:50 AM", end: "11:40 AM", subject: "English (SHK 56)" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "Maths (REV 62)" },
+    { start: "12:30 PM", end: "1:20 PM", subject: "Science (PES 49)" },
     { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "Humanities" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Humanities (GOA 51)" },
   ],
   Tuesday: [
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "French" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "PE (Boys PE / Girls Swimming)" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "Science" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "Maths (REV 62)" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "PE (Boys PE - DEK; Girls Swim - CHB)" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "Science (PES 49)" },
     { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
-    { start: "10:50 AM", end: "11:40 AM", subject: "English" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "Arabic" },
-    { start: "12:30 PM", end: "1:20 PM", subject: "Islamic" },
+    { start: "10:50 AM", end: "11:40 AM", subject: "English (SHK 56)" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "Arabic (A - AYS 62; B - EMA/NEA 54/27)" },
+    { start: "12:30 PM", end: "1:20 PM", subject: "Islamic (A - ASA 62; B - ADM 25; PSHE - REV)" },
     { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "Maths" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Maths (REV 62)" },
   ],
   Wednesday: [
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "Arabic" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "Science" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "ICT" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "Arabic (A - AYS 20; B - EMA/NEA 54/27)" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "Science (PES 49)" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "ICT (PRF 28)" },
     { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
-    { start: "10:50 AM", end: "11:40 AM", subject: "Maths" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "English" },
-    { start: "12:30 PM", end: "1:20 PM", subject: "Music" },
+    { start: "10:50 AM", end: "11:40 AM", subject: "Maths (REV 62)" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "English (SHK 56)" },
+    { start: "12:30 PM", end: "1:20 PM", subject: "Music (FRF 44)" },
     { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "Humanities" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Humanities (GOA 64)" },
   ],
   Thursday: [
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "PE (Girls PE / Boys Swimming)" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "UAE SST" },
-    { start: "9:40 AM", end: "10:30 AM", subject: "Art" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "MSC / MED (MED - EHM 27; MSC - BOS 62)" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "UAE SST (UAE SS - ZEE 27; INT - PES 63)" },
+    { start: "9:40 AM", end: "10:30 AM", subject: "Art (QUU 45)" },
     { start: "10:30 AM", end: "10:50 AM", subject: "Break", kind: "break" },
-    { start: "10:50 AM", end: "11:40 AM", subject: "Maths" },
-    { start: "11:40 AM", end: "12:30 PM", subject: "English" },
-    { start: "12:30 PM", end: "1:20 PM", subject: "Arabic" },
+    { start: "10:50 AM", end: "11:40 AM", subject: "Maths (REV 62)" },
+    { start: "11:40 AM", end: "12:30 PM", subject: "English (SHK 56)" },
+    { start: "12:30 PM", end: "1:20 PM", subject: "Arabic (A - AYS 58; B - EMA/NEA 54/27)" },
     { start: "1:20 PM", end: "1:50 PM", subject: "Lunch", kind: "lunch" },
-    { start: "1:50 PM", end: "2:40 PM", subject: "Science" },
+    { start: "1:50 PM", end: "2:40 PM", subject: "Science (PES 49)" },
   ],
   Friday: [
     { start: "7:40 AM", end: "8:00 AM", subject: "Registration & Wellbeing Check" },
-    { start: "8:00 AM", end: "8:50 AM", subject: "MSC / MED" },
-    { start: "8:50 AM", end: "9:40 AM", subject: "English" },
+    { start: "8:00 AM", end: "8:50 AM", subject: "MSC / MED (APM 54)" },
+    { start: "8:50 AM", end: "9:40 AM", subject: "English (SHK 56)" },
     { start: "9:40 AM", end: "10:00 AM", subject: "Break", kind: "break" },
-    { start: "10:00 AM", end: "11:00 AM", subject: "Maths" },
+    { start: "10:00 AM", end: "11:00 AM", subject: "PE (Girls PE - CHB; Boys Swim - DEK)" },
   ],
 };
 
@@ -274,25 +274,18 @@ function preprocessImageCanvas(file) {
     img.onload = () => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-      
-      // Upscale for high resolution text extraction
       const scale = Math.max(1, 2000 / Math.max(img.width, img.height));
       canvas.width = img.width * scale;
       canvas.height = img.height * scale;
-      
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imgData.data;
-      
-      // High-contrast grayscale conversion
       for (let i = 0; i < data.length; i += 4) {
         const v = 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
         const contrastFactor = 1.4;
         const adjusted = ((v / 255 - 0.5) * contrastFactor + 0.5) * 255;
         const clamped = Math.min(255, Math.max(0, adjusted));
-        data[i] = clamped;
-        data[i + 1] = clamped;
-        data[i + 2] = clamped;
+        data[i] = clamped; data[i + 1] = clamped; data[i + 2] = clamped;
       }
       ctx.putImageData(imgData, 0, 0);
       resolve(canvas.toDataURL("image/png"));
@@ -310,8 +303,7 @@ async function importImageFile(file) {
   try {
     const processedImageDataUrl = await preprocessImageCanvas(file);
     status.textContent = "Loading OCR engine…"; progress.style.width = "18%";
-    await ensureTesseract(); 
-    
+    await ensureTesseract();
     progress.style.width = "25%";
     const result = await Tesseract.recognize(processedImageDataUrl, "eng", { logger: message => {
       if (message.status === "recognizing text" && Number.isFinite(message.progress)) {
@@ -319,23 +311,19 @@ async function importImageFile(file) {
         status.textContent = `Analyzing grid text… ${Math.round(message.progress * 100)}%`;
       }
     }});
-    
     progress.style.width = "92%";
     const parsed = parseTimetableOCR(result.data);
     if (!parsed || !Object.keys(parsed.timetable).length) throw new Error("No timetable cells were detected.");
-    
     progress.style.width = "100%"; timetable = parsed.timetable; timetableMeta.year = parsed.year || timetableMeta.year || "8";
     saveTimetable(); closeImportModal(); updateClock(); showToast(`Image imported${parsed.year ? ` for Year ${parsed.year}` : ""} ✓`);
   } catch (error) {
     console.error("OCR import failed:", error);
     status.textContent = "Could not read image clearly. Re-trying baseline OCR scan...";
-    
-    // Fallback: Run baseline without heavy preprocessing if binarization failed
     try {
       const fallbackResult = await Tesseract.recognize(file, "eng");
       const parsedFallback = parseTimetableOCR(fallbackResult.data);
       if (parsedFallback && Object.keys(parsedFallback.timetable).length) {
-        timetable = parsedFallback.timetable; 
+        timetable = parsedFallback.timetable;
         timetableMeta.year = parsedFallback.year || timetableMeta.year || "8";
         saveTimetable(); closeImportModal(); updateClock(); showToast(`Image imported successfully ✓`);
         return;
@@ -343,7 +331,6 @@ async function importImageFile(file) {
     } catch (fallbackErr) {
       console.error("Fallback OCR failed:", fallbackErr);
     }
-    
     status.textContent = "OCR couldn't read the layout. Try a straighter, lit photo or JSON import.";
     progress.style.width = "0%"; showToast("Failed to parse image timetable.", true);
   } finally { ocrBusy = false; }
@@ -363,29 +350,23 @@ function parseTimetableOCR(data) {
   const lines = (Array.isArray(data.lines) ? data.lines : []).map(line => ({
     text: normaliseOCR(line.text || ""), x: line.bbox ? (line.bbox.x0 + line.bbox.x1) / 2 : 0, y: line.bbox ? (line.bbox.y0 + line.bbox.y1) / 2 : 0
   })).filter(line => line.text);
-  
   const yearMatch = lines.map(line => line.text.match(/\bYEAR\s*(\d{1,2})\b/i)).find(Boolean), year = yearMatch ? yearMatch[1] : null;
   const dayPositions = {};
   for (const line of lines) for (const day of ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"]) if (line.text === day || line.text.includes(day)) dayPositions[day[0] + day.slice(1).toLowerCase()] = line.x;
-  
   const xs = Object.values(dayPositions), fallback = xs.length >= 2 ? interpolateFiveColumns(Math.min(...xs), Math.max(...xs)) : [0,1,2,3,4];
   const days = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
   days.forEach((day, index) => { if (!dayPositions[day]) dayPositions[day] = fallback[index]; });
-  
   const subjectLines = lines.filter(line => isLikelySubjectLine(line.text)), cells = {};
   days.forEach(day => cells[day] = []);
   for (const line of groupOCRLines(subjectLines, dayPositions)) {
     const day = nearestDay(line.x, dayPositions), parsed = parseSubjectLine(line.text);
     if (day && parsed) cells[day].push({ ...parsed, y: line.y });
   }
-  
   days.forEach(day => { cells[day] = dedupeOCRCells(cells[day].sort((a,b) => a.y-b.y)); });
-  
   if (looksLikeSchoolGrid(lines)) {
     const exact = buildKnownGridFromOCR(cells);
     if (exact) return { year, timetable: exact };
   }
-  
   const timetableOut = {}; days.forEach(day => { timetableOut[day] = buildScheduleFromOCR(day, cells[day]); });
   return { year, timetable: timetableOut };
 }
@@ -406,10 +387,10 @@ function buildKnownGridFromOCR(cells) {
   let totalScore = 0, totalPossible = 0;
   for (const day of Object.keys(expected)) {
     const found = (cells[day] || []).map(item => item.subject.toLowerCase().replace(/[^a-z]/g, ""));
-    for (const subject of expected[day]) { 
-      totalPossible++; 
-      const target = subject.toLowerCase().replace(/[^a-z]/g, ""); 
-      if (found.some(text => text.includes(target) || target.includes(text))) totalScore++; 
+    for (const subject of expected[day]) {
+      totalPossible++;
+      const target = subject.toLowerCase().replace(/[^a-z]/g, "");
+      if (found.some(text => text.includes(target) || target.includes(text))) totalScore++;
     }
   }
   if (totalScore / totalPossible < 0.50) return null;
@@ -458,19 +439,18 @@ function buildScheduleFromOCR(day, items) {
 function parseSubjectLine(text) {
   const upper = text.toUpperCase().replace(/[|]/g, " ").replace(/\s+/g, " ").trim();
   if (/REGISTRATION|WELLBEING/.test(upper) || /^YEAR\b/.test(upper)) return null;
-  if (/BREAK/.test(upper)) return { subject: "Break" }; 
+  if (/BREAK/.test(upper)) return { subject: "Break" };
   if (/LUNCH/.test(upper)) return { subject: "Lunch" };
   if (/ASSEMBLY/.test(upper)) return { subject: "Assembly" };
   if (/BOYS\s*PE.*GIRLS\s*SWIM|PE.*BOYS.*GIRLS.*SWIM/.test(upper)) return { subject: "PE (Boys PE / Girls Swimming)" };
   if (/GIRLS\s*PE.*BOYS\s*SWIN|PE.*GIRLS.*BOYS.*SWIN/.test(upper)) return { subject: "PE (Girls PE / Boys Swimming)" };
-  if (/MSC\s*\/?\s*MED/.test(upper)) return { subject: "MSC / MED" }; 
+  if (/MSC\s*\/?\s*MED/.test(upper)) return { subject: "MSC / MED" };
   if (/UAE\s*SS(T)?/.test(upper)) return { subject: "UAE SST" };
   for (const token of upper.split(/\s+/)) if (SUBJECT_ALIASES[token]) return { subject: SUBJECT_ALIASES[token] };
   return null;
 }
 
 function isLikelySubjectLine(text) { return /ASSEMBLY|BREAK|LUNCH|MSC|MED|UAE|PE|BOYS|GIRLS|SWIN|SWIM|FRE|ARA|ISL|ENG|MAT|SCI|IT|ART|MUS|HUM|FRENCH|ARABIC|ENGLISH|MATH|SCIENCE|MUSIC|HUMANITIES/i.test(text); }
-
 function normaliseOCR(text) { return String(text).replace(/[—–]/g, "-").replace(/[“”]/g, '"').replace(/[’]/g, "'").replace(/\bSWIN\b/gi, "SWIM").replace(/\bWUNC\b/gi, "LUNCH").replace(/\s+/g, " ").trim(); }
 function interpolateFiveColumns(min, max) { const step = (max-min)/4; return [0,1,2,3,4].map(i => min + step*i); }
 function nearestDay(x, positions) { let best=null, distance=Infinity; for (const [day,position] of Object.entries(positions)) { const d=Math.abs(x-position); if (d<distance) { distance=d; best=day; } } return best; }
@@ -489,16 +469,14 @@ function setupControls() {
   document.getElementById("imageFile")?.addEventListener("change", event => { const file=event.target.files?.[0]; if (file) importImageFile(file); event.target.value=""; });
   document.getElementById("resetBtn")?.addEventListener("click", () => { if (!confirm("Reset DeluxTable to the built-in Year 8 timetable?")) return; timetable=deepCopy(DEFAULT_TIMETABLE); timetableMeta={year:"8"}; saveTimetable(); closeImportModal(); updateClock(); showToast("Year 8 timetable restored ✓"); });
   document.getElementById("yearInput")?.addEventListener("change", event => { const value=event.target.value.trim(); if (value) { timetableMeta.year=value; saveTimetable(); updateClock(); } });
-  
   const yearIn = document.getElementById("yearInput");
   if (yearIn) yearIn.value = timetableMeta.year || "8";
-  
   document.addEventListener("keydown", event => { if (event.key==="Escape") closeImportModal(); });
   document.getElementById("importModal")?.addEventListener("click", event => { if (event.target.id==="importModal") closeImportModal(); });
 }
 
 function escapeHtml(value) { return String(value).replace(/[&<>"']/g, char => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[char])); }
 
-setupControls(); 
-updateClock(); 
+setupControls();
+updateClock();
 setInterval(updateClock, 1000);
