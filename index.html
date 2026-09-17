@@ -122,6 +122,8 @@
     <span>Creamo</span>
   </a>
 
+  <!-- Load the canonical JSON before script.js so old localStorage data is replaced once. -->
+  <script src="main-timetable.js"></script>
   <script src="script.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
