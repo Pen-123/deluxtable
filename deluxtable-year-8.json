@@ -1,0 +1,62 @@
+{
+  "format": "DeluxTable",
+  "version": 2,
+  "year": "8",
+  "timetable": {
+    "Monday": [
+      { "start": "7:40 AM", "end": "8:00 AM", "subject": "Registration & Wellbeing Check" },
+      { "start": "8:00 AM", "end": "8:50 AM", "subject": "Assembly", "room": "46" },
+      { "start": "8:50 AM", "end": "9:40 AM", "subject": "Arabic (A - AYS 49; B - EMA/NEA 54/27)" },
+      { "start": "9:40 AM", "end": "10:30 AM", "subject": "Islamic (A - ASA 62; B - ADM 25; PSHE - REV)" },
+      { "start": "10:30 AM", "end": "10:50 AM", "subject": "Break", "kind": "break" },
+      { "start": "10:50 AM", "end": "11:40 AM", "subject": "English (SHK 56)" },
+      { "start": "11:40 AM", "end": "12:30 PM", "subject": "Maths (REV 62)" },
+      { "start": "12:30 PM", "end": "1:20 PM", "subject": "Science (PES 49)" },
+      { "start": "1:20 PM", "end": "1:50 PM", "subject": "Lunch", "kind": "lunch" },
+      { "start": "1:50 PM", "end": "2:40 PM", "subject": "Humanities (GOA 51)" }
+    ],
+    "Tuesday": [
+      { "start": "7:40 AM", "end": "8:00 AM", "subject": "Registration & Wellbeing Check" },
+      { "start": "8:00 AM", "end": "8:50 AM", "subject": "Maths (REV 62)" },
+      { "start": "8:50 AM", "end": "9:40 AM", "subject": "PE (Boys PE - DEK; Girls Swim - CHB)" },
+      { "start": "9:40 AM", "end": "10:30 AM", "subject": "Science (PES 49)" },
+      { "start": "10:30 AM", "end": "10:50 AM", "subject": "Break", "kind": "break" },
+      { "start": "10:50 AM", "end": "11:40 AM", "subject": "English (SHK 56)" },
+      { "start": "11:40 AM", "end": "12:30 PM", "subject": "Arabic (A - AYS 62; B - EMA/NEA 54/27)" },
+      { "start": "12:30 PM", "end": "1:20 PM", "subject": "Islamic (A - ASA 62; B - ADM 25; PSHE - REV)" },
+      { "start": "1:20 PM", "end": "1:50 PM", "subject": "Lunch", "kind": "lunch" },
+      { "start": "1:50 PM", "end": "2:40 PM", "subject": "Maths (REV 62)" }
+    ],
+    "Wednesday": [
+      { "start": "7:40 AM", "end": "8:00 AM", "subject": "Registration & Wellbeing Check" },
+      { "start": "8:00 AM", "end": "8:50 AM", "subject": "Arabic (A - AYS 20; B - EMA/NEA 54/27)" },
+      { "start": "8:50 AM", "end": "9:40 AM", "subject": "Science (PES 49)" },
+      { "start": "9:40 AM", "end": "10:30 AM", "subject": "ICT (PRF 28)" },
+      { "start": "10:30 AM", "end": "10:50 AM", "subject": "Break", "kind": "break" },
+      { "start": "10:50 AM", "end": "11:40 AM", "subject": "Maths (REV 62)" },
+      { "start": "11:40 AM", "end": "12:30 PM", "subject": "English (SHK 56)" },
+      { "start": "12:30 PM", "end": "1:20 PM", "subject": "Music (FRF 44)" },
+      { "start": "1:20 PM", "end": "1:50 PM", "subject": "Lunch", "kind": "lunch" },
+      { "start": "1:50 PM", "end": "2:40 PM", "subject": "Humanities (GOA 64)" }
+    ],
+    "Thursday": [
+      { "start": "7:40 AM", "end": "8:00 AM", "subject": "Registration & Wellbeing Check" },
+      { "start": "8:00 AM", "end": "8:50 AM", "subject": "MSC / MED (MED - EHM 27; MSC - BOS 62)" },
+      { "start": "8:50 AM", "end": "9:40 AM", "subject": "UAE SST (UAE SS - ZEE 27; INT - PES 63)" },
+      { "start": "9:40 AM", "end": "10:30 AM", "subject": "Art (QUU 45)" },
+      { "start": "10:30 AM", "end": "10:50 AM", "subject": "Break", "kind": "break" },
+      { "start": "10:50 AM", "end": "11:40 AM", "subject": "Maths (REV 62)" },
+      { "start": "11:40 AM", "end": "12:30 PM", "subject": "English (SHK 56)" },
+      { "start": "12:30 PM", "end": "1:20 PM", "subject": "Arabic (A - AYS 58; B - EMA/NEA 54/27)" },
+      { "start": "1:20 PM", "end": "1:50 PM", "subject": "Lunch", "kind": "lunch" },
+      { "start": "1:50 PM", "end": "2:40 PM", "subject": "Science (PES 49)" }
+    ],
+    "Friday": [
+      { "start": "7:40 AM", "end": "8:00 AM", "subject": "Registration & Wellbeing Check" },
+      { "start": "8:00 AM", "end": "8:50 AM", "subject": "MSC / MED (APM 54)" },
+      { "start": "8:50 AM", "end": "9:40 AM", "subject": "English (SHK 56)" },
+      { "start": "9:40 AM", "end": "10:00 AM", "subject": "Break", "kind": "break" },
+      { "start": "10:00 AM", "end": "11:00 AM", "subject": "PE (Girls PE - CHB; Boys Swim - DEK)" }
+    ]
+  }
+}
